@@ -50,9 +50,7 @@ form.addEventListener("submit", function (e) {
 
 /*funcao para validar entrada de dados*/
 function validateInputs(props) {
-	if (!props.task || !props.date) {
-		console.log("Por favor, preencha os campos.");
-	} else {
+	if (props.task && props.date) {
 		return true;
 	}
 }
@@ -60,12 +58,11 @@ function validateInputs(props) {
 //funcao para adicionar nova meta
 function addNew(props) {
 	if (!validateInputs(props)) {
-		createMessagePopup("Não pode haver campos vazios.", { messageType: MESSAGE__ERROR });
+		createMessagePopup("The input fields must be filled in.", { messageType: MESSAGE__ERROR });
 		return;
 	}
 	if (validateIfExists(props.task)) {
-		console.info(`A meta ${JSON.stringify(props, null, 2)} já existe.`);
-		createMessagePopup(`A meta "${props.task}" já existe.`, { messageType: MESSAGE__NORMAL });
+		createMessagePopup(`The task "${props.task}" already exists.`, { messageType: MESSAGE__NORMAL });
 		return;
 	}
 	taskArray.push(props);
@@ -145,7 +142,7 @@ export function update(element, taskId = 0, action = "", obj = {}) {
 		case "delete":
 			saveTaskArrayToStorage();
 			element.remove();
-			createMessagePopup("Meta removida com sucesso!");
+			createMessagePopup("The task has been removed.");
 			break;
 		case "conclude":
 			saveTaskArrayToStorage();
@@ -155,7 +152,7 @@ export function update(element, taskId = 0, action = "", obj = {}) {
 			list.appendChild(element);
 			recreateLucideIcons();
 			element.querySelector(".item__content").classList.add("list__item--show");
-			createMessagePopup("Meta adicionada");
+			createMessagePopup("New task added.");
 			break;
 	}
 	isEmpty("incomplete");
@@ -171,13 +168,13 @@ function handleConcludeAction(element, taskId) {
 		element.remove();
 		listComplete.appendChild(element);
 		setStyleDone();
-		createMessagePopup("Meta concluída!");
+		createMessagePopup("Task complete!");
 	} else {
 		element.querySelector(".item__content").classList.remove("list__item--done");
 		//listComplete.removeChild(element);
 		element.remove();
 		list.appendChild(element);
-		createMessagePopup("Meta marcada como não concluída.");
+		//createMessagePopup("");
 	}
 	element.querySelector(".item__content").classList.add("list__item--show");
 }
