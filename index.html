@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./dialog-add.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./popup-message.css" type="text/css" media="all" />
+		<title>ToDo</title>
+	</head>
+	<body>
+		<dialog class="dialog" id="newtask-dialog">
+			<form id="form" class="dialog__container">
+				<div class="dialog__top">
+					<h2 class="cards__title">New Task</h2>
+					<button class="dialog__close" id="close-dialog"><i class="icon" data-lucide="x"></i></button>
+				</div>
+				<div class="dialog__input__section">
+					<label for="input-task">Task</label>
+					<span class="dialog__input__title">Task</span>
+					<input class="input__task" type="text" id="input-task" name="input-task" minlength="1" maxlength="1000" />
+				</div>
+				<div class="dialog__input__section">
+					<label for="date-task">Date</label>
+					<span class="dialog__input__title">Date</span>
+					<input class="date__task" type="date" name="date-task" id="date-task" value="" />
+				</div>
+				<div class="dialog__radio__section">
+					<div class="container__radios"><label for="rd0"><span>Normal</span></label><input data-color="#BC6FF1" type="radio" class="dialog__radios normal" id="rd0" name="rd-color" value="#BC6FF1" checked></div>
+					<div class="container__radios"><label for="rd1"><span>Job</span></label><input data-color="#0000cd" type="radio" class="dialog__radios job" id="rd1" name="rd-color" value="#0000cd"></div>
+					<div class="container__radios"><label for="rd2"><span>Learn</span></label><input data-color="#2e8b57" type="radio" class="dialog__radios learn" id="rd2" name="rd-color" value="#2e8b57"></div>
+					<div class="container__radios"><label for="rd3"><span>Personal</span></label><input data-color="#ffff00" type="radio" class="dialog__radios personal" id="rd3" name="rd-color" value="#ffff00"></div>
+					<div class="container__radios"><label for="rd4"><span>Home</span></label><input data-color="#f9a406" type="radio" class="dialog__radios home" id="rd4" name="rd-color" value="#f9a406"></div>
+					<div class="container__radios"><label for="rd5"><span>Projects</span></label><input data-color="#663399" type="radio" class="dialog__radios projects" id="rd5" name="rd-color" value="#663399"></div>
+					<div class="container__radios"><label for="rd6"><span>Urgent</span></label><input data-color="#8b0000" type="radio" class="dialog__radios urgent" id="rd6" name="rd-color" value="#8b0000"></div>
+					<div class="container__radios"><label for="rd7"><span>Lazer</span></label><input data-color="#40e0d0" type="radio" class="dialog__radios lazer" id="rd7" name="rd-color" value="#40e0d0"></div>
+				</div>
+				<button type="submit" class="button__default confirm" id="confirm-task">Confirm</button>
+			</form>
+		</dialog>
+		<header><h1>TODO</h1></header>
+		<main class="container">
+			<section class="container__cards">
+				<div class="card__top">
+					<h2 class="cards__title">Incomplete</h2>
+					<button class="button__default card__button__add" id="btn-add-new">Create New</button>
+				</div>
+				<ul class="task__list" id="inconplete-list"></ul>
+			</section>
+			<section class="container__cards">
+				<div class="card__top">
+					<h2 class="cards__title">Complete</h2>
+				</div>
+				<ul class="task__list" id="complete-list"></ul>
+			</section>
+		</main>
+		<template id="template-items">
+			<li class="list__item" data-id="">
+				<div class="item__content">
+					<div class="item__data">
+						<p class="data__title">Task 1 ajajajajanajajajajajajajajajajaj</p>
+						<p class="data__date">Saturday</p>
+						<div class="data__color"></div>
+					</div>
+					<div class="item__action">
+						<button class="action__button"><i class="menu__item__icon icon" data-lucide="circle-ellipsis"></i></button>
+					</div>
+				</div>
+				<div class="action__menu">
+					<ul class="menu__list">
+						<li data-function="edit"><i data-lucide="pencil" class="menu__item__icon icon"></i> Edit</li>
+						<li data-function="delete"><i data-lucide="trash-2" class="menu__item__icon icon"></i> Delete</li>
+					</ul>
+				</div>
+			</li>
+		</template>
+
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>
