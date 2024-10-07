@@ -7,8 +7,9 @@ function sanitizeInputTask(task){
 function createUniqueID() {
 	return Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
 }
-export function getDataTask(inputTask, inputDate, inputColor){
-	if(!inputTask || !inputDate) return "";
+
+export function getDataTask(inputTask, inputDate, inputCategory){
+	//if(!inputTask || !inputDate) return "";
 	const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	let sanitizedTask = sanitizeInputTask(inputTask);
 	const handleDate = new Date(inputDate);
@@ -18,12 +19,14 @@ export function getDataTask(inputTask, inputDate, inputColor){
 	const obj = {
 		id: createUniqueID(),
 		task: sanitizedTask,
-		date: `${daysOfWeek[handleDate.getUTCDay()]}, ${day}/${month}/${year}`,
+		date: `${year}-${month}-${day}`,
+		day: `${daysOfWeek[handleDate.getUTCDay()]}`,
 		done: false,
-		color: inputColor,
+		category: inputCategory,
 	}
 	document.querySelector("#input-task").value = "";
 	document.querySelector("#date-task").value = "";
+	document.querySelector("input[type=radio][value=normal]").checked = true;
 	return obj;
 }
 

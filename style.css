@@ -15,10 +15,23 @@ body, section, main, div,  header, ul, li, span, p{
   -moz-osx-font-smoothing: grayscale;
   --bg-color: #070707;
   --c-purple: #52057B;
-  --c-primary: #892CDC;
-  --c-accent: #BC6FF1;
+  --c-primary: #711fba;
+  --c-accent: #8829dd;
   --c-text: #D3D3D3;
-  /*#E0E0E0 ,#D3D3D3, #CCCCCC */
+  --c-hover: #44444444;
+  --c-details: #77777755;
+  /*#E0E0E0 ,#D3D3D3, #CCCCCC, #55555555 */
+  
+  /*categories colors*/
+  --category-normal-color: var(--c-accent);
+  --category-job-color:#2a2ae0;
+  --category-learn-color:#3aa124;
+  --category-personal-color:#ffff00;
+  --category-home-color:#f9a406;
+  --category-projects-color:#663399;
+  --category-urgent-color:#8b0000;
+  --category-leisure-color:#40e0d0;
+  /**********/
   --padding-content: 1.2rem;
   --min-height-card: 200px;
   --font-normal: 1.6rem;
@@ -27,7 +40,9 @@ body, section, main, div,  header, ul, li, span, p{
   --font-xlarge: 2.4rem;
   --font-xxlarge: 3rem;
 }
-
+*:hover{
+	transition: background 300ms;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -84,7 +99,7 @@ h1 {
 	top: 0;
 	left: 0;
 	right: 0;
-	background-color: var(--c-purple);
+	background-color: var(--c-details);
 	height: 0.12rem;
 	content: "";
 
@@ -108,13 +123,16 @@ h1 {
 	text-transform: uppercase;
 	padding: 0.8rem;
 }
+.button__default:hover{
+	background-color: var(--c-accent);
+}
 /*.card__button__add{
 	
 }*/
 .cards__title{
 	margin: 0;
 	font-size: var(--font-xlarge);
-	letter-spacing: 0.4rem;
+	/*letter-spacing: 0.4rem;*/
 	color: var(--c-text);
 }
 .empty__disclaimer{
@@ -174,14 +192,11 @@ h1 {
 	}
 }
 .list__item--show{
-	animation: moveDown 500ms forwards;
-	/*transition: opacity 500ms; */
-	/*opacity: 1; */
-	/*transform: translateY(0);*/
+	animation: moveDown 300ms forwards;
 }
 .item__content:hover:not(.list__item--done){
 	transition: background-color 300ms;
-	background-color: #131313;
+	background-color: var(--c-hover);
 }
 .list__item--done{
 	text-decoration: line-through;
@@ -214,9 +229,6 @@ h1 {
 	margin-block: 0.4rem;
 }
 .item__action{
-	/* display: flex;
-	place-items: center; */
-
 	position: relative;
 }
 
@@ -254,7 +266,7 @@ h1 {
 	user-select: none;
 }
 .action__menu.action__menu--show{
-	transition: opacity 500ms;
+	transition: opacity 300ms;
 	opacity: 1;
 	pointer-events: auto;
 }
@@ -271,6 +283,7 @@ h1 {
 }
 .menu__list li:hover{
 	color: var(--c-accent);
+	background-color: var(--c-hover);
 }
 .menu__item__icon{
 	pointer-events: none;

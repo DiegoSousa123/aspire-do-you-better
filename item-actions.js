@@ -1,5 +1,5 @@
-import { taskArray, findTask, renderTasks, update, ACTION_DELETE, ACTION_CONCLUDE} from "./main.js";
-
+import {taskListClass, renderTasks, update, ACTION_DELETE, ACTION_CONCLUDE, ACTION_UPDATE} from "./main.js";
+import {createMessagePopup, MESSAGE__ERROR} from './message-popup.js';
 const listIncomplete = document.querySelector("#inconplete-list");
 const listComplete = document.querySelector("#complete-list");
 
@@ -14,7 +14,6 @@ export function addAllClick() {
 function handleListClick(event) {
 	event.stopPropagation();
 	const target = event.target;
-
 	if (!target.classList.contains("action__button")) {
 		if(!target.classList.contains("empty__disclaimer")){
 			const targetElement = target.closest(".list__item");
@@ -54,16 +53,7 @@ function closeOtherPopups() {
 		}
 	});
 }
-//Checar clique fora do menu
-//para fechar o menu
-/*function handleClickOutsideMenu(e) {
-	const actMenu = document.querySelectorAll(".action__menu");
-	actMenu.forEach((item) => {
-		if (item.classList.contains("action__menu--show")) {
-			item.classList.toggle("action__menu--show");
-		}
-	});
-} */
+
 //funcao para tratar o evento de clique
 //no menu de acao dos items
 function handleItemAction(e) {
@@ -71,18 +61,20 @@ function handleItemAction(e) {
 	e.stopPropagation();
 	const target = e.target;
 	if (target.dataset.function === "edit") {
-		!isDone(eTarget.querySelector(".data__title").textContent)
-			? console.log(`Clicked edit on: ${JSON.stringify(taskArray[findTask(taskArray, eTarget.dataset.id)])}`)
-			: console.log(`Clicked edit on: ${JSON.stringify(taskArray[findTask(taskArray, eTarget.dataset.id)])} that is complete`);
+		update(eTarget, eTarget.dataset.id, ACTION_UPDATE);
 	} else if (target.dataset.function === "delete") {
-		removeTask(eTarget, findTask(taskArray, eTarget.dataset.id));
+		removeTask(eTarget, eTarget.dataset.id);
 	}
 	target.closest(".action__menu").classList.toggle("action__menu--show");
 }
 //Funcao para remover meta
-function removeTask(element, taskToRemove) {
-	taskArray.splice(taskToRemove, 1);
-	update(element, 0, ACTION_DELETE);
+function removeTask(element, taskId) {
+	try{
+		taskListClass.deleteTask(taskId);
+		update(element, 0, ACTION_DELETE);
+	}catch(e){
+		createMessagePopup(e, {messageType: MESSAGE__ERROR});
+	}
 }
 //Funcao para pegar o titulo
 //no elemento da lista
@@ -90,18 +82,10 @@ export function findTheElement(origin) {
 	if (!origin) return;
 	return origin.target.closest(".list__item");
 }
-export function isDone(element) {
-	for (let i of taskArray) {
-		if (i.task === element && i.done === true) {
-			return true;
-		}
-	}
-}
 
 //marcar meta como concluida ou nao
 function toggleStateTask(element, targetId) {
-	const taskId = findTask(taskArray, targetId);
-	taskArray[taskId].done = !taskArray[taskId].done;
-	update(element, taskId, ACTION_CONCLUDE);
+	const curr = taskListClass.getTaskItem(targetId);
+	curr.done = !curr.done;
+	update(element, targetId, ACTION_CONCLUDE);
 }
-

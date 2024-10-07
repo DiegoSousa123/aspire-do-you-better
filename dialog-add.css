@@ -28,11 +28,16 @@
 	gap: 2rem;
 	background-color: var(--bg-color);
 	border-radius: 0.8rem;
-	border: 2px solid var(--c-purple);
+	border: 2px solid var(--c-details);
 }
 .dialog__top{
 	display: flex;
 	justify-content: space-between;
+}
+.dialog__title{
+	letter-spacing: unset;
+	font-weight: 500;
+	font-size: var(--font-xlarge);
 }
 .dialog__top button{
 	all: unset;
@@ -40,8 +45,12 @@
 	height: 40px;
 	display: grid;
 	place-items: center;
-	color: var(--c-accent);
+	color: var(--c-text);
 	cursor: pointer;
+	border-radius: 0.8rem;
+}
+.dialog__top button:hover{
+	background-color: var(--c-hover);
 }
 
 .dialog__input__section label{
@@ -56,13 +65,17 @@
 	flex-flow: column nowrap;
 	gap: 0.4rem;
 }
+.dialog__input__section input:hover,
+.dialog__input__section input:focus{
+	background-color: var(--c-hover);
+}
 .input__task, .date__task{
 	color: var(--c-text);
 	padding: 0.8rem;
 	font-size: var(--font-normal);
 	outline: none;
 	background-color: hsl(0,0%,5.5%);
-	border: 1px solid var(--c-accent);
+	border: 1px solid var(--c-details);
 	border-radius: 0.8rem;
 }
 .input__task:invalid{
@@ -78,9 +91,8 @@
 	font-size: var(--font-small);
 } */
 .dialog__input__title{
-	font-weight: 500;
-	letter-spacing: 0.1rem;
-	font-size: var(--font-normal);
+	font-weight: 400;
+	font-size: var(--font-large);
 	color: var(--c-text);
 }
 .dialog__radio__section{
@@ -112,7 +124,10 @@
 	z-index: 1 ;
 	inset: 0;
 	border-radius: 0.8rem;
-	border: 1px solid var(--c-accent);
+	cursor: pointer;
+	border: 1px solid transparent;
+	width: 1px;
+	transition: width 300ms;
 }
 .dialog__radios::before{
 	content: "";
@@ -125,40 +140,44 @@
 	height: 20px;
 	border-radius: 50%;
 }
+.dialog__radios:hover{
+	width: 100%;
+	background-color: var(--c-hover);
+}
 .normal::before{
-	background-color: var(--c-accent);
+	background-color: var(--category-normal-color);
 }
 .job::before{
-	background-color: #0000cd;
+	background-color: var(--category-job-color) ;
 }
 .learn::before{
-	background-color: #2e8b57;
+	background-color: var(--category-learn-color) ;
 }
 .personal::before{
-	background-color: #ffff00;
+	background-color: var(--category-personal-color) ;
 }
 .home::before{
-	background-color: #f9a406;
+	background-color: var(--category-home-color) ;
 }
 .projects::before{
-	background-color: #663399;
+	background-color:  var(--category-projects-color);
 }
 .urgent::before{
-	background-color: #8b0000;
+	background-color:  var(--category-urgent-color);
 }
-.lazer::before{
-	background-color: #40e0d0;
+.leisure::before{
+	background-color:  var(--category-leisure-color);
 }
 .dialog__radios:checked{
-	/*border: 1px solid crimson;*/
-	background-color: hsl(0,0%,14%);
+	width: 100%;
+	border-color: var(--c-details);
+	background-color: var(--c-hover);
 }
 .confirm{
 	padding-left: 2rem;
 	padding-right: 2rem;
 	max-width: max-content;
 	margin: 0 auto;
-	background-color: var(--c-purple);
 }
 
 @media (width < 400px){
