@@ -27,7 +27,7 @@
 	align-items: space-between;
 	gap: 2rem;
 	background-color: var(--bg-color);
-	border-radius: 0.8rem;
+	border-radius: var(--bdr-rd);
 	border: 2px solid var(--c-details);
 }
 .dialog__top{
@@ -74,9 +74,9 @@
 	padding: 0.8rem;
 	font-size: var(--font-normal);
 	outline: none;
-	background-color: hsl(0,0%,5.5%);
+	background-color: var(--c-input-bg);
 	border: 1px solid var(--c-details);
-	border-radius: 0.8rem;
+	border-radius: var(--bdr-rd);
 }
 .input__task:invalid{
 	border-left: 2px;
@@ -123,7 +123,7 @@
 	position: absolute;
 	z-index: 1 ;
 	inset: 0;
-	border-radius: 0.8rem;
+	border-radius: var(--bdr-rd);
 	cursor: pointer;
 	border: 1px solid transparent;
 	width: 1px;
