@@ -7,7 +7,7 @@
 	padding: 0;
 	background: none;
 	opacity: 0;
-	animation: dialogAnim 300ms forwards;
+	animation: dialogAnim var(--anim-time) forwards;
 	box-sizing: border-box;
 }
 
@@ -127,7 +127,7 @@
 	cursor: pointer;
 	border: 1px solid transparent;
 	width: 1px;
-	transition: width 300ms;
+	transition: width var(--anim-time);
 }
 .dialog__radios::before{
 	content: "";
@@ -198,6 +198,7 @@
 	.dialog__container{
 		padding: var(--padding-content);
 		border: unset;
+		border-radius: unset;
 		overflow: hidden;
 	}
 	.confirm{

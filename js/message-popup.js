@@ -1,4 +1,4 @@
-import {recreateLucideIcons} from "./main.js";
+import {recreateLucideIcons} from "../main.js";
 export const MESSAGE__NORMAL = "normal";
 export const MESSAGE__ERROR = "error";
 //Criar mensagem de erro/info

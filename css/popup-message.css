@@ -1,14 +1,8 @@
-:root{
-	--normal-bg: #0f0f0f;
-	--normal-border: #52057B;
-	--normal-text: #fafafa;
-	--error-bg: #320202;
-	--error-text: crimson;
-}
 .popup__message{
 	min-width: 100%;
 	border-radius: var(--bdr-rd);
 	font-size: var(--font-normal);
+	box-shadow: 0 0.4rem 1.6rem -0.4rem var(--c-shadow);
 	padding: 1.6rem 1.2rem;
 }
 .popup__content{
@@ -25,7 +19,7 @@
 	min-width: 360px;
 	opacity: 0;
 	transform: translateY(-100%);
-	transition: opacity 300ms, transform 300ms, overlay 300ms allow-discrete, display 300ms allow-discrete;
+	transition: opacity var(--anim-time), transform var(--anim-time), overlay var(--anim-time) allow-discrete, display var(--anim-time) allow-discrete;
 	margin: 1.2rem auto;
 	border: unset;
 }
@@ -40,12 +34,10 @@
 	height: 2.4rem;
 }
 .popup__message.normal__message {
-	background-color: var(--normal-bg);
-	color: var(--normal-text)
+	background-color: var(--message-normal-bg);
+	color: var(--c-text)
 }
-/*.normal__message p{color: var(--normal-text);} */
 .popup__message.error__message {
-	background-color: var(--error-bg);
-	color: var(--error-text);
+	background-color: var(--message-error-bg);
+	color: var(--message-error-text);
 }
-/*.error__message p{ color: crimson; } */

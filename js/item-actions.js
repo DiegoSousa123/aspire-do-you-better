@@ -1,4 +1,4 @@
-import {taskListClass, renderTasks, update, ACTION_DELETE, ACTION_CONCLUDE, ACTION_UPDATE} from "./main.js";
+import {taskListClass, renderTasks, update, ACTION_DELETE, ACTION_CONCLUDE, ACTION_UPDATE} from "../main.js";
 import {createMessagePopup, MESSAGE__ERROR} from './message-popup.js';
 const listIncomplete = document.querySelector("#inconplete-list");
 const listComplete = document.querySelector("#complete-list");

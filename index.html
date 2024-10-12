@@ -4,9 +4,11 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="style.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="./dialog-add.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="./popup-message.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./css/variables.css" type="text/css" />
+		<link rel="stylesheet" href="./css/style.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./css/header.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./css/dialog-add.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="./css/popup-message.css" type="text/css" media="all" />
 		<title>ToDo</title>
 	</head>
 	<body>
@@ -16,7 +18,7 @@
 				<div class="search__container">
 					<button class="search__toggle" id="btn-toggle-search"><i data-lucide="search"></i></button>
 					<div class="search__wrapper" id="search-wrapper">
-						<input class="search__input" type="text" id="search-input" name="search">
+						<input class="search__input" type="text" id="search-input" name="search" placeholder="Do something cool!">
 						<button class="search__go" id="btn-search"><i data-lucide="x"></i></button>
 					</div>
 				</div>
@@ -81,7 +83,7 @@
 				<div class="dialog__input__section">
 					<label for="input-task">Task</label>
 					<span class="dialog__input__title">Task</span>
-					<input class="input__task" type="text" id="input-task" name="input-task" minlength="1" maxlength="1000" placeholder="Aprender algo novo..."/>
+					<input class="input__task" type="text" id="input-task" name="input-task" minlength="1" maxlength="1000" placeholder="Learn some thing new..."/>
 				</div>
 				<div class="dialog__input__section">
 					<label for="date-task">Date</label>

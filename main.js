@@ -1,7 +1,7 @@
-import { getDataTask } from "./addnew-task.js";
+import { getDataTask } from "./js/addnew-task.js";
 import { createIcons, Pencil, Trash2, CircleEllipsis, CircleAlert, Info, CircleX, X, Filter, Search } from "lucide";
-import { addAllClick } from "./item-actions.js";
-import { createMessagePopup, MESSAGE__ERROR, MESSAGE__NORMAL } from "./message-popup.js";
+import { addAllClick } from "./js/item-actions.js";
+import { createMessagePopup, MESSAGE__ERROR, MESSAGE__NORMAL } from "./js/message-popup.js";
 
 export const ACTION_DELETE = "delete";
 export const ACTION_CONCLUDE = "conclude";
@@ -63,8 +63,10 @@ class TaskList {
 		if(this.#task_filtered.length <= 0) throw new Error("No tasks found");
 		return this.#task_filtered.map((i)=> ({...i}));
 	}
-	searchTask(input){
-		this.#search_result = this.#task_list.filter((t)=>{
+	searchTask(input, currFilter){
+		let listToSearch;
+		currFilter === "all" ? listToSearch = this.#task_list : listToSearch = this.#task_filtered;
+		this.#search_result = listToSearch.filter((t)=>{
 			if(t.task.toLowerCase().includes(input.toLowerCase().trim())){
 				return true;
 			}
@@ -124,8 +126,16 @@ btnSearchClose.addEventListener("click", ()=>{
 });
 searchInput.addEventListener("input", (e)=>{
 	try{
-		renderTasks(taskListClass.searchTask(e.target.value));
+		let currentFilter
+		for(let item of filterOptions.values()){
+			if(item.matches(".category__item--selected")){
+				currentFilter = item.dataset.filterOption;
+				break;
+			}
+		}
+		renderTasks(taskListClass.searchTask(e.target.value, currentFilter));
 	}catch(e){
+		console.log(e);
 		list.innerHTML = "";
 		listComplete.innerHTML = "";
 		renderTasks([]);
@@ -166,7 +176,7 @@ filterOptions.forEach((item)=>{
 				renderTasks(taskListClass.filterTasks(item.dataset.filterOption));
 			}
 		}catch(e){
-			createMessagePopup(e, {messageType: MESSAGE__ERROR});
+			createMessagePopup("No tasks found in this category.", {messageType: MESSAGE__ERROR});
 		}
 	});
 });
