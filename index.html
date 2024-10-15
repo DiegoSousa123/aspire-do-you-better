@@ -4,17 +4,23 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="./css/variables.css" type="text/css" />
 		<link rel="stylesheet" href="./css/style.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="./css/header.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="./css/dialog-add.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="./css/popup-message.css" type="text/css" media="all" />
-		<title>ToDo</title>
+		<title>Aspire: Reach higher, achieve more</title>
 	</head>
 	<body>
 		<header>
 			<div class="header__top">
-				<h1>TODO</h1>
+				<div class="header__logo">
+					<img id="logo" src="/aspire_icon_purple.webp" alt="The icon of Aspire - Do your best">
+					<h1>Aspire</h1>
+				</div>
 				<div class="search__container">
 					<button class="search__toggle" id="btn-toggle-search"><i data-lucide="search"></i></button>
 					<div class="search__wrapper" id="search-wrapper">
@@ -23,7 +29,7 @@
 					</div>
 				</div>
 			</div>
-			<section class="category__list">
+			<section class="category__list" id="categories">
 				<button data-filter-option="all" class="category__item category__item--selected">
 					<div class="c__all"></div>
 					<span>All</span>
@@ -56,13 +62,17 @@
 					<div class="c__urgent"></div>
 					<span>Urgent</span>
 				</button>
+				<button data-filter-option="leisure" class="category__item">
+					<div class="c__leisure"></div>
+					<span>Leisure</span>
+				</button>
 			</section>
 		</header>
 		<main class="container">
 			<section class="container__cards">
 				<div class="card__top">
 					<h2 class="cards__title">Incomplete</h2>
-					<button class="button__default card__button__add" id="btn-add-new">Create New</button>
+					<button class="button__default" id="btn-add-new"><i class="button__icons" data-lucide="plus"></i><span>Create new task</span></button>
 				</div>
 				<ul class="task__list" id="inconplete-list"></ul>
 			</section>
@@ -77,7 +87,7 @@
 		<dialog class="dialog" id="newtask-dialog">
 			<form data-form-mode="new" id="form" class="dialog__container">
 				<div class="dialog__top">
-					<h3 class="cards__title dialog__title" id="dialog-title">New Task</h3>
+					<h3 class="cards__title dialog__title" id="dialog-title">New task</h3>
 					<button class="dialog__close" id="close-dialog"><i class="icon" data-lucide="x"></i></button>
 				</div>
 				<div class="dialog__input__section">
@@ -100,7 +110,7 @@
 					<div class="container__radios"><label for="rd6"><span>Urgent</span></label><input type="radio" class="dialog__radios urgent" id="rd6" name="rd-color" value="urgent"></div>
 					<div class="container__radios"><label for="rd7"><span>Leisure</span></label><input type="radio" class="dialog__radios leisure" id="rd7" name="rd-color" value="leisure"></div>
 				</div>
-				<button type="submit" class="button__default confirm" id="confirm-task">Confirm</button>
+				<button type="submit" class="button__default confirm" id="confirm-task"><i data-lucide="check"></i><span>Done</span></button>
 			</form>
 		</dialog>
 		<!-- message popover element  -->

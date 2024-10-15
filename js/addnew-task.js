@@ -9,7 +9,9 @@ function createUniqueID() {
 }
 
 export function getDataTask(inputTask, inputDate, inputCategory){
-	//if(!inputTask || !inputDate) return "";
+	if(!inputDate){
+		inputDate = Date.now();
+	}
 	const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	let sanitizedTask = sanitizeInputTask(inputTask);
 	const handleDate = new Date(inputDate);

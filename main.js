@@ -1,5 +1,5 @@
 import { getDataTask } from "./js/addnew-task.js";
-import { createIcons, Pencil, Trash2, CircleEllipsis, CircleAlert, Info, CircleX, X, Filter, Search } from "lucide";
+import { createIcons, Pencil, Trash2, CircleEllipsis, CircleAlert, Info, CircleX, X, Filter, Search, Plus, Check, ChevronRight } from "lucide";
 import { addAllClick } from "./js/item-actions.js";
 import { createMessagePopup, MESSAGE__ERROR, MESSAGE__NORMAL } from "./js/message-popup.js";
 
@@ -102,8 +102,28 @@ const btnToggleSearch = document.getElementById("btn-toggle-search");
 const btnSearchClose = document.getElementById("btn-search");
 const searchWrapper = document.getElementById("search-wrapper");
 const searchInput = document.getElementById("search-input");
+const logoImage = document.getElementById("logo");
+
+const mediaQueryColor = window.matchMedia('(prefers-color-scheme: light)');
+const changeLogo = (e) =>{
+	if(e.matches){
+		logoImage.src = "/aspire_icon_purple.webp";
+	}else{
+		logoImage.src = "/apire_icon_white (1).webp";
+	}
+}
+const getFilterSelected = () =>{
+	for(let i of filterOptions.values()){
+		if(i.matches(".category__item--selected")){
+			return i.dataset.filterOption;
+		}
+	}
+}
+changeLogo(mediaQueryColor);
 /*******/
 /* listeners */
+
+mediaQueryColor.addEventListener("change", changeLogo);
 document.addEventListener("DOMContentLoaded", () => {
 		addAllClick();
 });
@@ -120,19 +140,15 @@ btnSearchClose.addEventListener("click", ()=>{
 		searchWrapper.classList.remove("search__wrapper--visible");
 		if(searchInput.value !== ""){
 			searchInput.value = "";
-			renderTasks(taskListClass.getTaskList());
+			getFilterSelected() !== "all" ? renderTasks(taskListClass.filterTasks(getFilterSelected())) : renderTasks(taskListClass.getTaskList());
 		}
 	}
 });
+/* search event listener
+*/
 searchInput.addEventListener("input", (e)=>{
 	try{
-		let currentFilter
-		for(let item of filterOptions.values()){
-			if(item.matches(".category__item--selected")){
-				currentFilter = item.dataset.filterOption;
-				break;
-			}
-		}
+		let currentFilter = getFilterSelected();
 		renderTasks(taskListClass.searchTask(e.target.value, currentFilter));
 	}catch(e){
 		console.log(e);
@@ -147,7 +163,7 @@ searchInput.addEventListener("input", (e)=>{
  open and close modal dialog
 */
 btnAdd.addEventListener("click", () => {
-	document.getElementById("dialog-title").textContent = "New Task";
+	document.getElementById("dialog-title").textContent = "New task";
 	dialogAdd.showModal();
 	handleForm("new");
 });
@@ -219,13 +235,7 @@ function handleForm(mode, id = 0) {
 }
 /******/
 /*funcao para validar entrada de dados*/
-function validateInputs(task, date) {
-	if (task != "" && date != "") {
-		return true;
-	}else{
-		return false;
-	}
-}
+function validateInputs(task, date) {return task != "";}
 
 //funcao para adicionar nova meta
 function addNew(props) {
@@ -293,11 +303,6 @@ export function renderTasks(targetList) {
 	isEmpty("incomplete");
 	isEmpty("complete");
 	recreateLucideIcons();
-	/*try{
-		console.log(JSON.stringify(taskListClass.filterTasks("learn"), null, 4));
-	}catch(e){
-		console.error(e);
-	} */
 }
 
 //funcao para atualizar o estado
@@ -306,14 +311,13 @@ export function update(element, taskId = 0, action = "") {
 	switch (action) {
 		case ACTION_UPDATE:
 			const { task, date, category } = taskListClass.getTaskItem(taskId);
-			document.getElementById("dialog-title").textContent = "Edit Task";
+			document.getElementById("dialog-title").textContent = "Edit task";
 			document.querySelector("#input-task").value = task;
 			document.querySelector("#date-task").value = `${date}`;
 			const radio = document.querySelector(`input[type=radio][value=${category}]`);
 			radio.checked = true;
 			dialogAdd.showModal();
 			handleForm("update", taskId);
-			//createMessagePopup("The task was been edited.");
 			break;
 
 		case ACTION_DELETE:
@@ -400,8 +404,10 @@ export function recreateLucideIcons() {
 			CircleX,
 			X,
 			Filter,
-			Search
+			Search,
+			Plus,
+			Check,
+			ChevronRight
 		}
 	});
 }
-// renderTasks(taskListClass.getTaskList());

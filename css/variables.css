@@ -1,5 +1,5 @@
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	font-family: "Inter", system-ui, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
 	font-size: 62.5%;
@@ -11,7 +11,8 @@
 	--c-purple: #52057b;
 	--c-primary: #711fba;
 	--c-accent: #8829dd;
-	--c-text: #d3d3d3;
+	--c-text: #f2f3f4;
+	--c-text-date: #BEBFC5;
 	--c-hover: #44444444;
 	--c-details: #77777755;
 	--c-input-bg: #0e0e0e;
@@ -50,9 +51,12 @@
 		--c-primary: #711fba;
 		--c-accent: #8829dd;
 		--c-text: #070707;
+		--c-text-date: #808080;
 		--c-hover: #99999944;
 		--c-details: #a1a1a155;
 		--c-input-bg: #f5f5f5;
 		--message-normal-bg: #f4f4f4;
+		--message-error-bg: #7a0101;
+		--message-error-text: #f4f4f4;
 	}
 }

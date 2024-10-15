@@ -6,7 +6,7 @@ header,
 ul,
 li,
 span,
-p {
+p, h1{
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -17,6 +17,7 @@ button {
 	border: none;
 	outline: none;
 	background-color: transparent;
+	cursor: pointer;
 }
 *:hover {
 	transition: background var(--anim-time);
@@ -59,6 +60,9 @@ body {
 	gap: 0.4rem;
 	position: relative;
 }
+.container__cards:first-child .card__top{
+	margin-bottom: 0.8rem;
+}
 .container__cards::after {
 	position: absolute;
 	top: 0;
@@ -82,15 +86,22 @@ body {
 	font-size: var(--font-normal);
 	font-weight: 400;
 	color: ghostwhite;
-	cursor: pointer;
-	text-transform: uppercase;
-	padding: 0.8rem;
+	padding: 0.4rem 0.8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+}
+.button__default .button__icons{
+	width: var(--font-normal);
+	height: var(--font-normal);
 }
 .button__default:hover {
 	background-color: var(--c-accent);
 }
 .cards__title {
 	margin: 0;
+	font-weight: 500;
 	font-size: var(--font-xlarge);
 	color: var(--c-text);
 }
@@ -142,25 +153,24 @@ body {
 	transition: background-color var(--anim-time);
 	background-color: var(--c-hover);
 }
-.list__item--done {
-	text-decoration: line-through;
-	color: var(--c-text);
-}
 .item__data {
 	max-width: 80%;
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 0.4rem;
 }
 .item__data .data__title {
 	pointer-events: none;
 	user-select: none;
-	font-size: var(--font-large);
-	line-height: 1.2;
+	font-size: var(--font-normal);
+	line-height: 1.4;
 	display: block;
 	overflow-wrap: break-word;
 }
 .item__data p.data__date {
 	pointer-events: none;
 	user-select: none;
-	color: var(--c-text);
+	color: var(--c-text-date);
 	font-size: var(--font-small);
 }
 .data__color {
@@ -168,6 +178,11 @@ body {
 	height: 0.4rem;
 	border-radius: 0.4rem;
 	margin-block: 0.4rem;
+}
+.list__item--done {
+	text-decoration: line-through;
+	text-decoration-thickness: 1px;
+	color: var(--c-text-date);
 }
 .item__action {
 	position: relative;
