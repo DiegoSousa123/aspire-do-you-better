@@ -16,13 +16,13 @@ function handleListClick(event) {
 	const target = event.target;
 	if (!target.classList.contains("action__button")) {
 		if(!target.classList.contains("empty__disclaimer")){
-			const targetElement = target.closest(".list__item");
+			const targetElement = findTheElement(event);
 			if(targetElement){ 
 				toggleStateTask(targetElement, targetElement.dataset.id);
 			}
 		}
 	} else {
-		itemAction(target.closest(".list__item"));
+		itemAction(findTheElement(event));
 	}
 }
 /*Funcao para abrir e gerenciar

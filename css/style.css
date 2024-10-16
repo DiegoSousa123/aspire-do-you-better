@@ -244,6 +244,7 @@ body {
 .icon {
 	width: 2.6rem;
 	height: 2.6rem;
+	transition: transform var(--anim-time);
 }
 #app {
 	max-width: 1280px;

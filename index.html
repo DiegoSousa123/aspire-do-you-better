@@ -4,9 +4,11 @@
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+			rel="stylesheet" />
 		<link rel="stylesheet" href="./css/variables.css" type="text/css" />
 		<link rel="stylesheet" href="./css/style.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="./css/header.css" type="text/css" media="all" />
@@ -18,18 +20,22 @@
 		<header>
 			<div class="header__top">
 				<div class="header__logo">
-					<img id="logo" src="/aspire_icon_purple.webp" alt="The icon of Aspire - Do your best">
+					<img id="logo" src="/aspire_icon_purple.webp" alt="The icon of Aspire - Do your best" />
 					<h1>Aspire</h1>
 				</div>
 				<div class="search__container">
 					<button class="search__toggle" id="btn-toggle-search"><i data-lucide="search"></i></button>
 					<div class="search__wrapper" id="search-wrapper">
-						<input class="search__input" type="text" id="search-input" name="search" placeholder="Do something cool!">
+						<input class="search__input" type="text" id="search-input" name="search" placeholder="Do something cool!" />
 						<button class="search__go" id="btn-search"><i data-lucide="x"></i></button>
 					</div>
 				</div>
 			</div>
-			<section class="category__list" id="categories">
+			<div class="category__container" id="category-container">
+				<div class="category__toggle" id="category-toggle"><i class="icon" data-lucide="chevron-right"></i> <span> Filter</span></div>
+				
+				<!-- filters -->
+				<section class="category__list" id="categories">
 				<button data-filter-option="all" class="category__item category__item--selected">
 					<div class="c__all"></div>
 					<span>All</span>
@@ -67,12 +73,16 @@
 					<span>Leisure</span>
 				</button>
 			</section>
+			</div>
+			
 		</header>
 		<main class="container">
 			<section class="container__cards">
 				<div class="card__top">
 					<h2 class="cards__title">Incomplete</h2>
-					<button class="button__default" id="btn-add-new"><i class="button__icons" data-lucide="plus"></i><span>Create new task</span></button>
+					<button class="button__default" id="btn-add-new">
+						<i class="button__icons" data-lucide="plus"></i><span>Create new task</span>
+					</button>
 				</div>
 				<ul class="task__list" id="inconplete-list"></ul>
 			</section>
@@ -93,22 +103,53 @@
 				<div class="dialog__input__section">
 					<label for="input-task">Task</label>
 					<span class="dialog__input__title">Task</span>
-					<input class="input__task" type="text" id="input-task" name="input-task" minlength="1" maxlength="1000" placeholder="Learn some thing new..."/>
+					<input
+						class="input__task"
+						type="text"
+						id="input-task"
+						name="input-task"
+						minlength="1"
+						maxlength="1000"
+						placeholder="Learn some thing new..." />
 				</div>
 				<div class="dialog__input__section">
 					<label for="date-task">Date</label>
 					<span class="dialog__input__title">Date</span>
-					<input class="date__task" type="date" name="date-task" id="date-task"/>
+					<input class="date__task" type="date" name="date-task" id="date-task" />
 				</div>
 				<div class="dialog__radio__section">
-					<div class="container__radios"><label for="rd0"><span>Normal</span></label><input type="radio" class="dialog__radios normal" id="rd0" name="rd-color" value="normal" checked></div>
-					<div class="container__radios"><label for="rd1"><span>Job</span></label><input type="radio" class="dialog__radios job" id="rd1" name="rd-color" value="job"></div>
-					<div class="container__radios"><label for="rd2"><span>Learn</span></label><input type="radio" class="dialog__radios learn" id="rd2" name="rd-color" value="learn"></div>
-					<div class="container__radios"><label for="rd3"><span>Personal</span></label><input type="radio" class="dialog__radios personal" id="rd3" name="rd-color" value="personal"></div>
-					<div class="container__radios"><label for="rd4"><span>Home</span></label><input type="radio" class="dialog__radios home" id="rd4" name="rd-color" value="home"></div>
-					<div class="container__radios"><label for="rd5"><span>Projects</span></label><input type="radio" class="dialog__radios projects" id="rd5" name="rd-color" value="projects"></div>
-					<div class="container__radios"><label for="rd6"><span>Urgent</span></label><input type="radio" class="dialog__radios urgent" id="rd6" name="rd-color" value="urgent"></div>
-					<div class="container__radios"><label for="rd7"><span>Leisure</span></label><input type="radio" class="dialog__radios leisure" id="rd7" name="rd-color" value="leisure"></div>
+					<div class="container__radios">
+						<label for="rd0"><span>Normal</span></label
+						><input type="radio" class="dialog__radios normal" id="rd0" name="rd-color" value="normal" checked />
+					</div>
+					<div class="container__radios">
+						<label for="rd1"><span>Job</span></label
+						><input type="radio" class="dialog__radios job" id="rd1" name="rd-color" value="job" />
+					</div>
+					<div class="container__radios">
+						<label for="rd2"><span>Learn</span></label
+						><input type="radio" class="dialog__radios learn" id="rd2" name="rd-color" value="learn" />
+					</div>
+					<div class="container__radios">
+						<label for="rd3"><span>Personal</span></label
+						><input type="radio" class="dialog__radios personal" id="rd3" name="rd-color" value="personal" />
+					</div>
+					<div class="container__radios">
+						<label for="rd4"><span>Home</span></label
+						><input type="radio" class="dialog__radios home" id="rd4" name="rd-color" value="home" />
+					</div>
+					<div class="container__radios">
+						<label for="rd5"><span>Projects</span></label
+						><input type="radio" class="dialog__radios projects" id="rd5" name="rd-color" value="projects" />
+					</div>
+					<div class="container__radios">
+						<label for="rd6"><span>Urgent</span></label
+						><input type="radio" class="dialog__radios urgent" id="rd6" name="rd-color" value="urgent" />
+					</div>
+					<div class="container__radios">
+						<label for="rd7"><span>Leisure</span></label
+						><input type="radio" class="dialog__radios leisure" id="rd7" name="rd-color" value="leisure" />
+					</div>
 				</div>
 				<button type="submit" class="button__default confirm" id="confirm-task"><i data-lucide="check"></i><span>Done</span></button>
 			</form>

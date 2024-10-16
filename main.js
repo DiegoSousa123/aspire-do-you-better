@@ -103,27 +103,48 @@ const btnSearchClose = document.getElementById("btn-search");
 const searchWrapper = document.getElementById("search-wrapper");
 const searchInput = document.getElementById("search-input");
 const logoImage = document.getElementById("logo");
+const categoryContainer = document.getElementById("category-container");
+const categoryToggle = document.getElementById("category-toggle");
 
+
+/*
+	matchMedia 
+*/
 const mediaQueryColor = window.matchMedia('(prefers-color-scheme: light)');
+const matchMediaCategory = window.matchMedia('(min-width: 1024px)');
 const changeLogo = (e) =>{
+	//handle logo version
 	if(e.matches){
 		logoImage.src = "/aspire_icon_purple.webp";
 	}else{
 		logoImage.src = "/apire_icon_white (1).webp";
 	}
 }
+const handleCategoryFilterExpand = (e) =>{
+	//handle if filter must be expanded
+	if(e.matches){
+	categoryContainer.classList.add("category--expanded");
+	}else{
+	categoryContainer.classList.remove("category--expanded");
+	}
+}
+
+changeLogo(mediaQueryColor);
+handleCategoryFilterExpand(matchMediaCategory);
+mediaQueryColor.addEventListener("change", changeLogo);
+matchMediaCategory.addEventListener("change", handleCategoryFilterExpand);
+/*******/
+
 const getFilterSelected = () =>{
+	//returns the current filter selected
 	for(let i of filterOptions.values()){
 		if(i.matches(".category__item--selected")){
 			return i.dataset.filterOption;
 		}
 	}
 }
-changeLogo(mediaQueryColor);
-/*******/
-/* listeners */
 
-mediaQueryColor.addEventListener("change", changeLogo);
+/* listeners */
 document.addEventListener("DOMContentLoaded", () => {
 		addAllClick();
 });
@@ -151,11 +172,9 @@ searchInput.addEventListener("input", (e)=>{
 		let currentFilter = getFilterSelected();
 		renderTasks(taskListClass.searchTask(e.target.value, currentFilter));
 	}catch(e){
-		console.log(e);
 		list.innerHTML = "";
 		listComplete.innerHTML = "";
 		renderTasks([]);
-		//createMessagePopup(e, {messageType: MESSAGE__ERROR});
 	}
 });
 
@@ -176,6 +195,16 @@ btnCancel.addEventListener("click", (e) => {
 /*
  filter related code
 */
+
+//show/hide the filter
+categoryToggle.addEventListener("click", ()=>{
+	if(categoryContainer.matches(".category--expanded")){
+		categoryContainer.classList.remove("category--expanded");
+	}else{
+		categoryContainer.classList.add("category--expanded");
+	}
+});
+//filter listeners
 filterOptions.forEach((item)=>{
 	if(item.matches(".category__item--selected") && item.dataset.filterOption === "all"){
 		renderTasks(taskListClass.getTaskList());
@@ -211,7 +240,7 @@ form.addEventListener("submit", function formHandle(e) {
 		const data = new FormData(form);
 		const [title, date, category] = data;
 		if (dialogAdd instanceof HTMLDialogElement && dialogAdd.open) dialogAdd.close();
-		if(!validateInputs(title[1], date[1])){
+		if(!validateInputs(title[1])){
 				clearInputs();
 				createMessagePopup("The fields may be filled in.", {messageType:MESSAGE__ERROR});
 				return;
@@ -235,7 +264,7 @@ function handleForm(mode, id = 0) {
 }
 /******/
 /*funcao para validar entrada de dados*/
-function validateInputs(task, date) {return task != "";}
+function validateInputs(task) {return task != "";}
 
 //funcao para adicionar nova meta
 function addNew(props) {
@@ -243,7 +272,6 @@ function addNew(props) {
 		createMessagePopup(`The task "${props.task}" already exists.`);
 		return;
 	}
-
 	taskListClass.setNewTask(props);
 	const created = createItem(props).querySelector(".list__item");
 	saveTaskArrayToStorage();
@@ -259,7 +287,6 @@ function saveTaskArrayToStorage() {
 //get data from localStorage
 function getStorageTaskArray() {
 	if (!localStorage.getItem("tasks")) return [];
-	console.log(JSON.parse(localStorage.getItem("tasks")));
 	return JSON.parse(localStorage.getItem("tasks"));
 }
 
