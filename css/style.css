@@ -118,6 +118,7 @@ body {
 	padding: 0.4rem 0;
 	margin: 0.4rem 0;
 	max-width: 100%;
+	overflow: hidden;
 }
 .item__content {
 	padding: 0.8rem 0.4rem 0.8rem 0.8rem;
