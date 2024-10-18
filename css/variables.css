@@ -42,6 +42,7 @@
 	--font-xxlarge: 3rem;
 	--bdr-rd: 0.8rem;
 	--anim-time: 250ms;
+	--icon-normal-size: 2.4rem;
 }
 
 @media (prefers-color-scheme: light) {

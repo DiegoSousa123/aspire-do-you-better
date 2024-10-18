@@ -18,6 +18,7 @@ button {
 	outline: none;
 	background-color: transparent;
 	cursor: pointer;
+	border-radius: var(--bdr-rd);
 }
 *:hover {
 	transition: background var(--anim-time);
@@ -31,7 +32,6 @@ a:hover {
 }
 
 body {
-	margin: 0;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -42,6 +42,7 @@ body {
 	color: var(--c-text);
 }
 .container {
+	flex: 2;
 	width: 100%;
 	display: grid;
 	padding: var(--padding-content);
@@ -81,7 +82,6 @@ body {
 .button__default {
 	outline: none;
 	border: none;
-	border-radius: var(--bdr-rd);
 	background-color: var(--c-primary);
 	font-size: var(--font-normal);
 	font-weight: 400;
@@ -105,6 +105,10 @@ body {
 	font-size: var(--font-xlarge);
 	color: var(--c-text);
 }
+@keyframes emptyDisclaimer{
+	from{opacity: 0;}
+	to{opacity: 1;}
+}
 .empty__disclaimer {
 	user-select: none;
 	display: flex;
@@ -113,6 +117,7 @@ body {
 	gap: 0.4rem;
 	font-size: var(--font-normal);
 	height: var(--min-height-card);
+	animation: emptyDisclaimer var(--anim-time) ease-in-out forwards;
 }
 .list__item {
 	padding: 0.4rem 0;
@@ -136,7 +141,7 @@ body {
 @keyframes moveDown {
 	0% {
 		opacity: 0;
-		transform: translateY(-100%);
+		transform: translateY(-50%);
 	}
 	100% {
 		opacity: 1;
@@ -188,28 +193,20 @@ body {
 .item__action {
 	position: relative;
 }
-.item__action button {
+.action__button {
 	flex: 1 0 auto;
 	padding: 0.4rem;
-	border: none;
-	outline: none;
 	background-color: transparent;
 	color: var(--c-text);
 	z-index: 3;
-	cursor: pointer;
-	transition: transform var(--anim-time);
+	transition: background-color var(--anim-time);
 }
-.list__item--done .item__action button {
-	color: var(--c-text);
-}
-.item__action button:hover {
-	transition: transform var(--anim-time);
-	transform: rotate(90deg);
+.action__button:hover {
+	background-color: var(--c-hover);
 }
 .action__menu {
 	z-index: 5;
 	font-size: var(--font-normal);
-	letter-spacing: 0.1rem;
 	position: absolute;
 	min-width: max-content;
 	background-color: var(--bg-color);
@@ -234,22 +231,36 @@ body {
 	cursor: pointer;
 }
 .menu__list li:hover {
-	color: var(--c-accent);
 	background-color: var(--c-hover);
 }
-.menu__item__icon {
+.icon {
 	pointer-events: none;
 	color: currentColor;
 	vertical-align: middle;
-}
-.icon {
-	width: 2.6rem;
-	height: 2.6rem;
+	width: var(--icon-normal-size);
+	height: var(--icon-normal-size);
 	transition: transform var(--anim-time);
 }
-#app {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
+footer{
+	flex: 1 0;
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.copyright{
 	text-align: center;
+	padding: 2rem var(--padding-content);
+	font-size: var(--font-small);
+}
+footer::after{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: var(--c-details);
+	height: 0.12rem;
+	content: "";
 }

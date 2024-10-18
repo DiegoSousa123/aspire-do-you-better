@@ -33,7 +33,8 @@ class TaskList {
 		if (list) this.#task_list = list;
 	}
 	getTaskList() {
-		return this.#task_list.map((task) => ({ ...task }));
+		let temp = this.#task_list.map((task) => ({ ...task }));
+		return temp.length != 0 ? temp.sort(sortByNewest) : temp;
 	}
 	getTaskItem(id) {
 		return this.#findTaskItem(id);
@@ -50,6 +51,9 @@ class TaskList {
 			throw new Error (`Task ID ${taskId} not found.`);
 		}
 		this.#task_list.splice(index, 1);
+	}
+	deleteAllComplete(){
+		this.#task_list = this.#task_list.filter((i) => i.done != true);
 	}
 	updateTask(newTask, newDate, newCateg, currentId) {
 		const auxId = this.getTaskIndex(currentId);
@@ -75,7 +79,15 @@ class TaskList {
 		return this.#search_result.map((i)=>({...i}));
 	}
 }
-
+function sortByNewest(a, b){
+	let sA = a.id.substring(0, 8);
+	let sB = b.id.substring(0, 8);
+	if(sA > sB){
+		return -1;
+	}else if(sA < sB){
+		return 1;
+	}
+}
 export const taskListClass = new TaskList(getStorageTaskArray());
 
 //**************
@@ -96,6 +108,7 @@ const list = document.querySelector("#inconplete-list");
 const listComplete = document.querySelector("#complete-list");
 const dialogAdd = document.querySelector("#newtask-dialog");
 const btnAdd = document.querySelector("#btn-add-new");
+const btnClearAllComplete = document.getElementById("btn-clear-complete");
 const btnCancel = document.querySelector("#close-dialog");
 const filterOptions = document.querySelectorAll(".category__item");
 const btnToggleSearch = document.getElementById("btn-toggle-search");
@@ -185,6 +198,18 @@ btnAdd.addEventListener("click", () => {
 	document.getElementById("dialog-title").textContent = "New task";
 	dialogAdd.showModal();
 	handleForm("new");
+});
+btnClearAllComplete.addEventListener("click", ()=>{
+	try{
+		if(!listComplete.querySelector(".list__item")) return;
+		listComplete.innerHTML = "";
+		update();
+		taskListClass.deleteAllComplete();
+		saveTaskArrayToStorage();
+		createMessagePopup("The completed tasks have been cleaned.");
+	}catch(e){
+		createMessagePopup(e, {messageType: MESSAGE__ERROR});
+	}
 });
 btnCancel.addEventListener("click", (e) => {
 	e.preventDefault();
@@ -334,7 +359,7 @@ export function renderTasks(targetList) {
 
 //funcao para atualizar o estado
 //das metas (adicionar, remover e concluir)
-export function update(element, taskId = 0, action = "") {
+export function update(element = null, taskId = 0, action = "") {
 	switch (action) {
 		case ACTION_UPDATE:
 			const { task, date, category } = taskListClass.getTaskItem(taskId);
@@ -350,7 +375,7 @@ export function update(element, taskId = 0, action = "") {
 		case ACTION_DELETE:
 			saveTaskArrayToStorage();
 			element.remove()
-			createMessagePopup("The task has been removed.");
+			createMessagePopup("The task was removed.");
 			break;
 
 		case ACTION_CONCLUDE:
@@ -359,10 +384,10 @@ export function update(element, taskId = 0, action = "") {
 			break;
 
 		case ACTION_NEW:
-			list.appendChild(element);
+			list.prepend(element);
 			recreateLucideIcons();
 			element.querySelector(".item__content").classList.add("list__item--show");
-			createMessagePopup("New task added.", {messageType: MESSAGE__NORMAL});
+			createMessagePopup("New task added successfully.", {messageType: MESSAGE__NORMAL});
 			break;
 	}
 	isEmpty("incomplete");
@@ -374,13 +399,13 @@ export function update(element, taskId = 0, action = "") {
 function handleConcludeAction(element, taskId) {
 	if (taskListClass.getTaskItem(taskId).done) {
 		element.remove();
-		listComplete.appendChild(element);
+		listComplete.prepend(element);
 		setStyleDone();
-		createMessagePopup("Task complete!");
+		createMessagePopup("Task completed!");
 	} else {
 		element.querySelector(".item__content").classList.remove("list__item--done");
 		element.remove();
-		list.appendChild(element);
+		list.prepend(element);
 	}
 	element.querySelector(".item__content").classList.add("list__item--show");
 }
@@ -401,11 +426,11 @@ function isEmpty(listToCheck) {
 	let listTarget, disclaimerText;
 	if (listToCheck === "incomplete") {
 		listTarget = document.querySelector("#inconplete-list");
-		disclaimerText = "No task added.";
+		disclaimerText = "No tasks were added.";
 	}
 	if (listToCheck === "complete") {
 		listTarget = document.querySelector("#complete-list");
-		disclaimerText = "No task completed.";
+		disclaimerText = "No tasks were completed.";
 	}
 	const hasItems = listTarget.querySelectorAll(".list__item").length;
 	const hasDisclaimer = listTarget.querySelector(".empty__disclaimer");
