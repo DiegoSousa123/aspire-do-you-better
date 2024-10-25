@@ -42,6 +42,10 @@ class TaskList {
 	getTaskIndex(id) {
 		return this.#task_list.findIndex((item) => item.id === id);
 	}
+	get completedSize(){
+		if(this.#task_list.length <= 0) return 0;
+		return this.#task_list.filter(item => item.done).length;
+	}
 	validateIfExists(task) {
 		return this.#task_list.some((item) => item.task === task);
 	}
@@ -157,6 +161,13 @@ const getFilterSelected = () =>{
 	}
 }
 
+const handleClearCompleteVisibility = () =>{
+	if(taskListClass.completedSize > 1){
+		btnClearAllComplete.style.display = "flex";
+	}else{
+		btnClearAllComplete.style.display = "none";
+	}
+}
 /* listeners */
 document.addEventListener("DOMContentLoaded", () => {
 		addAllClick();
@@ -206,6 +217,7 @@ btnClearAllComplete.addEventListener("click", ()=>{
 		update();
 		taskListClass.deleteAllComplete();
 		saveTaskArrayToStorage();
+		handleClearCompleteVisibility();
 		createMessagePopup("The completed tasks have been cleaned.");
 	}catch(e){
 		createMessagePopup(e, {messageType: MESSAGE__ERROR});
@@ -326,6 +338,7 @@ function createItem({ task, date, day, id, done, category }) {
 	const localeDate = new Date(date).toLocaleDateString('en', {timeZone: "UTC", day: "2-digit", month: "2-digit", year: "numeric"});
 	listDate.textContent = `${day}, ${localeDate}`;
 	listItem.querySelector(".list__item").dataset.id = id;
+	listContent.setAttribute("draggable", "true");
 	colorElement.style.backgroundColor = getColorByCategory(category);
 	return listItem;
 }
@@ -354,6 +367,7 @@ export function renderTasks(targetList) {
 	}
 	isEmpty("incomplete");
 	isEmpty("complete");
+	handleClearCompleteVisibility();
 	recreateLucideIcons();
 }
 
@@ -375,12 +389,14 @@ export function update(element = null, taskId = 0, action = "") {
 		case ACTION_DELETE:
 			saveTaskArrayToStorage();
 			element.remove()
+			handleClearCompleteVisibility();
 			createMessagePopup("The task was removed.");
 			break;
 
 		case ACTION_CONCLUDE:
 			saveTaskArrayToStorage();
 			handleConcludeAction(element, taskId);
+			handleClearCompleteVisibility();
 			break;
 
 		case ACTION_NEW:

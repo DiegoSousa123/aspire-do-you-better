@@ -107,7 +107,6 @@
 			<form data-form-mode="new" id="form" class="dialog__container">
 				<div class="dialog__top">
 					<h3 class="cards__title dialog__title" id="dialog-title">New task</h3>
-					<button class="dialog__close" id="close-dialog"><i class="icon" data-lucide="x"></i></button>
 				</div>
 				<div class="dialog__input__section">
 					<label for="input-task">Task</label>
@@ -125,7 +124,9 @@
 					<label for="date-task">Date</label>
 					<span class="dialog__input__title">Date</span>
 					<input class="date__task" type="date" name="date-task" id="date-task" />
+					<small class="date__disclaimer">If no date is provided, the current date will be used.</small>
 				</div>
+				<span class="dialog__input__title">Category</span>
 				<div class="dialog__radio__section">
 					<div class="container__radios">
 						<label for="rd0"><span>Normal</span></label
@@ -160,7 +161,10 @@
 						><input type="radio" class="dialog__radios leisure" id="rd7" name="rd-color" value="leisure" />
 					</div>
 				</div>
-				<button type="submit" class="button__default confirm" id="confirm-task"><i data-lucide="check"></i><span>Done</span></button>
+				<div class="dialog__buttons">
+					<button type="submit" class="button__default confirm" id="confirm-task"><i data-lucide="check"></i><span>Done</span></button>
+					<button class="button__default dialog__close" id="close-dialog"><i class="icon" data-lucide="x"></i><span>Cancel</span></button>
+				</div>
 			</form>
 		</dialog>
 		<!-- message popover element  -->

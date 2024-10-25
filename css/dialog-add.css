@@ -1,6 +1,6 @@
 @keyframes dialogAnim{
-	from{ opacity: 0;}
-	to{opacity: 1;}
+	from{ transform: scale(0.8); opacity: 0;}
+	to{transform: scale(1); opacity: 1;}
 }
 .dialog{
 	border: none;
@@ -13,9 +13,6 @@
 
 .dialog::backdrop{
 	background-color: #00000095;
-	/*backdrop-filter: blur(1px);*/
-	opacity: 0;
-	animation: dialogAnim 1s forwards;
 }
 .dialog__container{
 	min-width: 320px;
@@ -39,17 +36,6 @@
 	font-weight: 500;
 	font-size: var(--font-xlarge);
 }
-.dialog__top button{
-	width: 40px;
-	height: 40px;
-	display: grid;
-	place-items: center;
-	color: var(--c-text);
-}
-.dialog__top button:hover{
-	background-color: var(--c-hover);
-}
-
 .dialog__input__section label{
 	position: absolute;
 	left: -10000px;
@@ -82,6 +68,10 @@
   border-bottom: 1px;
   border-style: solid;
   border-color: crimson;
+}
+.date__disclaimer{
+	font-size: var(--font-small);
+	color: var(--c-text);
 }
 /*input.date__task{
 	/*padding: 0.4rem;
@@ -170,13 +160,22 @@
 	border-color: var(--c-details);
 	background-color: var(--c-hover);
 }
-.confirm{
-	padding-left: 2rem;
-	padding-right: 2rem;
-	max-width: max-content;
-	margin: 0 auto;
+.dialog__buttons{
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18.4rem, 1fr));
+	gap: 0.8rem;
 }
-
+.confirm, .dialog__close{
+	width: 100%;
+}
+.dialog__close{
+	color: var(--c-text);
+	background-color: var(--c-details);
+}
+.dialog__close:hover{
+	background-color: var(--c-details);
+}
 @media (width < 400px){
 	.dialog{
 		inset: 0;
@@ -191,14 +190,14 @@
 		max-height: 100%;
 	}
 	.dialog__container{
-		padding: var(--padding-content);
+		padding: 2rem var(--padding-content);
 		border: unset;
 		border-radius: unset;
 		overflow: hidden;
 	}
-	.confirm{
+	.confirm, .dialog__close{
 		max-width: unset;
 		width: 100%;
-		padding-block: 1.6rem;
+		padding-block: 1.2rem;
 	}
 }

@@ -55,7 +55,7 @@ header *{
 	inset: 0;
 	margin-left: auto;
 	padding: 0 0.4rem;
-	transform: scale(0);
+	transform: scale(0.7);
 	transform-origin: right;
 	opacity: 0;
 	display: flex;
@@ -64,16 +64,18 @@ header *{
 	transition:
 		opacity var(--anim-time),
 		transform var(--anim-time);
+	pointer-events: none;
 }
 .search__wrapper:has(*:hover) {
 	background-color: var(--c-hover);
 }
 .search__wrapper--visible {
 	transition:
-		opacity var(--anim-time),
+		opacity var(--anim-time) 150ms,
 		transform var(--anim-time);
 	transform: scale(1);
 	opacity: 1;
+	pointer-events: auto;
 }
 .search__container:has(.search__wrapper.search__wrapper--visible) > .search__toggle {
 	visibility: hidden;
@@ -141,8 +143,8 @@ category filter styles
 	flex-flow: row wrap;
 	gap: 0.8rem;
 	opacity: 0;
-	transform: translateY(-200%);
-	transition: opacity var(--anim-time), 
+	transform: translateY(-100%);
+	transition: opacity var(--anim-time) 150ms, 
 	transform var(--anim-time);
 	will-change: transform, opacity;
 }

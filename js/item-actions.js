@@ -3,6 +3,57 @@ import {createMessagePopup, MESSAGE__ERROR} from './message-popup.js';
 const listIncomplete = document.querySelector("#inconplete-list");
 const listComplete = document.querySelector("#complete-list");
 
+listIncomplete.addEventListener("dragstart", handleDragStart);
+listIncomplete.addEventListener("dragend", handleDragEnd);
+listComplete.addEventListener("dragstart", handleDragStart);
+listComplete.addEventListener("dragend", handleDragEnd);
+
+listIncomplete.addEventListener("dragenter", handleDragEnter);
+listComplete.addEventListener("dragenter", handleDragEnter);
+listIncomplete.addEventListener("dragleave", handleDragLeave);
+listComplete.addEventListener("dragleave", handleDragLeave);
+
+listIncomplete.addEventListener("dragover", handleDragOver);
+listIncomplete.addEventListener("drop", handleDropEvent);
+listComplete.addEventListener("dragover", handleDragOver);
+listComplete.addEventListener("drop", handleDropEvent);
+
+function handleDragStart(e){
+	e.dataTransfer.effectAllowed = "move";
+	const listItemNode = e.target.parentNode;
+	e.dataTransfer.setData("text/plain", listItemNode.dataset.id);
+	e.target.classList.add("item__dragging");
+}
+function handleDragEnd(e){
+	e.target.classList.remove("item__dragging");
+	e.currentTarget.classList.remove("list__drag__highlight");
+}
+function handleDragEnter(e){
+	e.currentTarget.classList.add("list__drag__highlight");
+}
+function handleDragLeave(e){
+	e.currentTarget.classList.remove("list__drag__highlight");
+}
+function handleDragOver(e){
+	e.preventDefault();
+	e.dataTransfer.dropEffect = "move";
+}
+
+function handleDropEvent(e){
+	const targetItemId = e.dataTransfer.getData("text/plain");
+	const taskIsDone = taskListClass.getTaskItem(targetItemId).done;
+	if(e.currentTarget === listIncomplete && !taskIsDone){
+		return;
+	}else if(e.currentTarget === listComplete && taskIsDone){
+		return;
+	}
+	const targetItem = document.querySelector(`[data-id="${targetItemId}"]`);
+	e.currentTarget.prepend(targetItem);
+	e.currentTarget.classList.remove("list__drag__highlight");
+	toggleStateTask(targetItem, targetItemId);
+}
+
+
 export function addAllClick() {
 	listIncomplete.removeEventListener("click", handleListClick, false);
 	listComplete.removeEventListener("click", handleListClick, false);
