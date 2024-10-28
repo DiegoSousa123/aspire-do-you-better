@@ -1,8 +1,8 @@
 import { getDataTask } from "./js/addnew-task.js";
-import { createIcons, Pencil, Trash2, CircleEllipsis, CircleAlert, Info, CircleX, X, Filter, Search, Plus, Check, ChevronRight } from "lucide";
+import { createIcons, Pencil, Trash2, CircleEllipsis, CircleAlert, Info, CircleX, X, Filter, Search, Plus, Check, ChevronRight, Percent} from "lucide";
 import { addAllClick } from "./js/item-actions.js";
 import { createMessagePopup, MESSAGE__ERROR, MESSAGE__NORMAL } from "./js/message-popup.js";
-
+import { handleProgress } from "./js/progress-manager.js";
 export const ACTION_DELETE = "delete";
 export const ACTION_CONCLUDE = "conclude";
 export const ACTION_NEW = "new";
@@ -42,9 +42,15 @@ class TaskList {
 	getTaskIndex(id) {
 		return this.#task_list.findIndex((item) => item.id === id);
 	}
-	get completedSize(){
+	get completedStats(){
 		if(this.#task_list.length <= 0) return 0;
 		return this.#task_list.filter(item => item.done).length;
+	}
+	get getTaskCompletionStats(){
+		return {
+			complete: this.completedStats,
+			total: this.#task_list.length
+		}
 	}
 	validateIfExists(task) {
 		return this.#task_list.some((item) => item.task === task);
@@ -104,6 +110,9 @@ if (!metaThemeColor) {
 	document.head.appendChild(metaThemeColor);
 }
 metaThemeColor.content = mainColor;
+
+const headerDimen = document.querySelector(".header__top").getBoundingClientRect();
+rootElement.style.setProperty("--header-height", `${headerDimen.bottom + (headerDimen.height / 3)}px`);
 //*************
 
 /* elements */
@@ -122,7 +131,8 @@ const searchInput = document.getElementById("search-input");
 const logoImage = document.getElementById("logo");
 const categoryContainer = document.getElementById("category-container");
 const categoryToggle = document.getElementById("category-toggle");
-
+const progressContainer = document.getElementById("progress-container");
+const btnProgressToggle = document.getElementById("btn-toggle-progress");
 
 /*
 	matchMedia 
@@ -162,7 +172,7 @@ const getFilterSelected = () =>{
 }
 
 const handleClearCompleteVisibility = () =>{
-	if(taskListClass.completedSize > 1){
+	if(taskListClass.completedStats > 1){
 		btnClearAllComplete.style.display = "flex";
 	}else{
 		btnClearAllComplete.style.display = "none";
@@ -202,9 +212,6 @@ searchInput.addEventListener("input", (e)=>{
 	}
 });
 
-/*
- open and close modal dialog
-*/
 btnAdd.addEventListener("click", () => {
 	document.getElementById("dialog-title").textContent = "New task";
 	dialogAdd.showModal();
@@ -229,9 +236,9 @@ btnCancel.addEventListener("click", (e) => {
 	clearInputs();
 });
 
-/*
- filter related code
-*/
+btnProgressToggle.addEventListener("click", ()=>{
+	handleProgress(taskListClass.getTaskCompletionStats);
+});
 
 //show/hide the filter
 categoryToggle.addEventListener("click", ()=>{
@@ -403,7 +410,7 @@ export function update(element = null, taskId = 0, action = "") {
 			list.prepend(element);
 			recreateLucideIcons();
 			element.querySelector(".item__content").classList.add("list__item--show");
-			createMessagePopup("New task added successfully.", {messageType: MESSAGE__NORMAL});
+			createMessagePopup("New task added successfully.");
 			break;
 	}
 	isEmpty("incomplete");
@@ -475,7 +482,8 @@ export function recreateLucideIcons() {
 			Search,
 			Plus,
 			Check,
-			ChevronRight
+			ChevronRight,
+			Percent
 		}
 	});
 }

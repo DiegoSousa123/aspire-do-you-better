@@ -24,6 +24,7 @@
 					<h1>Aspire</h1>
 				</div>
 				<div class="search__container">
+					<button id="btn-toggle-progress" popovertarget="progress-container" class="progress__toggle"><i data-lucide="percent"></i></button>
 					<button class="search__toggle" id="btn-toggle-search"><i data-lucide="search"></i></button>
 					<div class="search__wrapper" id="search-wrapper">
 						<input class="search__input" type="text" id="search-input" name="search" placeholder="Do something cool!" />
@@ -174,6 +175,20 @@
 				<p id="popup-text"></p>
 			</div>
 		</div>
+		
+		<div popover class="progress__container" id="progress-container">
+			<span class="cards__title">Progress</span>
+			<div class="progress__container__inner">
+				<div class="progress__wrapper">
+					<svg width="200" height="200" viewBox="0 0 200 200">
+						<circle cx="100" cy="100" r="70" stroke="transparent" fill="transparent"/>
+						<circle transform="rotate(-90 100 100)" id="progress" cx="100" cy="100" r="70" fill="transparent"/>
+					</svg>
+					<span class="progress__label" id="progress-text">50%</span>
+				</div>
+			</div>
+		</div>
+		
 		<!-- list items template -->
 		<template id="template-items">
 			<li class="list__item" data-id="">
