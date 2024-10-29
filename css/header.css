@@ -38,8 +38,6 @@ header *{
 	flex-direction: column;
 	color: var(--c-text);
 	background-color: var(--bg-color);
-	/* box-shadow: inset 0 0 0.2rem var(--c-details),
-	0 0 0.2rem var(--c-details); */
 	border-radius: var(--bdr-rd);
 }
 .progress__container:popover-open{
@@ -86,7 +84,6 @@ header *{
 	gap: 0.8rem;
 	justify-content: flex-end;
 	position: relative;
-	overflow: hidden;
 }
 .search__toggle , .progress__toggle{
 	width: var(--search-buttons-size);
@@ -97,7 +94,7 @@ header *{
 	transition-delay: var(--anim-time);
 }
 .search__wrapper {
-	width: 40rem;
+	width: 0;
 	background-color: var(--c-input-bg);
 	border: 1px solid var(--c-details);
 	border-radius: var(--bdr-rd);
@@ -105,30 +102,24 @@ header *{
 	inset: 0;
 	margin-left: auto;
 	padding: 0 0.4rem;
-	transform: scale(0.7);
-	transform-origin: right;
 	opacity: 0;
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	transition:
-		opacity var(--anim-time),
-		transform var(--anim-time);
 	pointer-events: none;
 }
 .search__wrapper:has(*:hover) {
 	background-color: var(--c-hover);
 }
 .search__wrapper--visible {
+	--search-width: 40rem;
 	transition:
-		opacity var(--anim-time) 150ms,
-		transform var(--anim-time);
-	transform: scale(1);
+		opacity var(--anim-time);
+	width: var(--search-width);
 	opacity: 1;
 	pointer-events: auto;
 }
-.search__container:has(.search__wrapper.search__wrapper--visible) > .search__toggle,
-.search__container:has(.search__wrapper.search__wrapper--visible) > .progress__toggle{
+.search__container:has(.search__wrapper.search__wrapper--visible) > button{
 	visibility: hidden;
 	pointer-events: none;
 	opacity: 0;
@@ -149,9 +140,7 @@ header *{
 	height: var(--search-buttons-size);
 	color: currentColor;
 }
-.search__toggle:hover,
-.search__go:hover,
-.progress__toggle:hover{
+.search__container button:hover{
 	background-color: var(--c-hover);
 }
 /**********/
@@ -194,15 +183,13 @@ category filter styles
 	display: flex;
 	flex-flow: row wrap;
 	gap: 0.8rem;
-	opacity: 0;
-	transform: translateY(-100%);
-	transition: opacity var(--anim-time) 150ms, 
-	transform var(--anim-time);
-	will-change: transform, opacity;
+	visibility: hidden;
+	max-height: 0;
+	transition: max-height var(--anim-time);
 }
 .category--expanded .category__list{
-	opacity: 1;
-	transform: translateY(0);
+	visibility: visible;
+	max-height: 200px;
 }
 .category__item {
 	width: fit-content;
@@ -259,8 +246,11 @@ category filter styles
 /******/
 
 @media (width < 600px){
-	.search__container, .search__wrapper, .search__wrapper > input{ 
+	.search__container, .search__wrapper > input{ 
 		width: 100%;
+	}
+	.search__wrapper--visible{
+		--search-width: 100%;
 	}
 	.category__container{
 		width: 100%;
