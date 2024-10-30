@@ -7,6 +7,7 @@ export const ACTION_DELETE = "delete";
 export const ACTION_CONCLUDE = "conclude";
 export const ACTION_NEW = "new";
 export const ACTION_UPDATE = "update";
+const FILTER_SELECTED = {filter: "all"}
 /*
 	task list object
 */
@@ -123,7 +124,7 @@ const dialogAdd = document.querySelector("#newtask-dialog");
 const btnAdd = document.querySelector("#btn-add-new");
 const btnClearAllComplete = document.getElementById("btn-clear-complete");
 const btnCancel = document.querySelector("#close-dialog");
-const filterOptions = document.querySelectorAll(".category__item");
+const filterOptions = document.getElementById("categories");
 const btnToggleSearch = document.getElementById("btn-toggle-search");
 const btnSearchClose = document.getElementById("btn-search");
 const searchWrapper = document.getElementById("search-wrapper");
@@ -162,15 +163,6 @@ mediaQueryColor.addEventListener("change", changeLogo);
 matchMediaCategory.addEventListener("change", handleCategoryFilterExpand);
 /*******/
 
-const getFilterSelected = () =>{
-	//returns the current filter selected
-	for(let i of filterOptions.values()){
-		if(i.matches(".category__item--selected")){
-			return i.dataset.filterOption;
-		}
-	}
-}
-
 const handleClearCompleteVisibility = () =>{
 	if(taskListClass.completedStats > 1){
 		btnClearAllComplete.style.display = "flex";
@@ -195,7 +187,7 @@ btnSearchClose.addEventListener("click", ()=>{
 		searchWrapper.classList.remove("search__wrapper--visible");
 		if(searchInput.value !== ""){
 			searchInput.value = "";
-			getFilterSelected() !== "all" ? renderTasks(taskListClass.filterTasks(getFilterSelected())) : renderTasks(taskListClass.getTaskList());
+			FILTER_SELECTED.filter !== "all" ? renderTasks(taskListClass.filterTasks(FILTER_SELECTED.filter)) : renderTasks(taskListClass.getTaskList());
 		}
 	}
 });
@@ -203,8 +195,7 @@ btnSearchClose.addEventListener("click", ()=>{
 */
 searchInput.addEventListener("input", (e)=>{
 	try{
-		let currentFilter = getFilterSelected();
-		renderTasks(taskListClass.searchTask(e.target.value, currentFilter));
+		renderTasks(taskListClass.searchTask(e.target.value, FILTER_SELECTED.filter));
 	}catch(e){
 		list.innerHTML = "";
 		listComplete.innerHTML = "";
@@ -248,26 +239,24 @@ categoryToggle.addEventListener("click", ()=>{
 		categoryContainer.classList.add("category--expanded");
 	}
 });
-//filter listeners
-filterOptions.forEach((item)=>{
-	if(item.matches(".category__item--selected") && item.dataset.filterOption === "all"){
-		renderTasks(taskListClass.getTaskList());
-	}
-	item.addEventListener("click", (e)=>{
-		filterOptions.forEach((i)=>{
+//filter listener
+filterOptions.addEventListener("click", (e)=>{
+	if(e.target.nodeName !== "BUTTON") return;
+	const targetElement = e.target;
+	document.querySelectorAll(".category__item").forEach((i)=>{
 			i.classList.remove("category__item--selected");
-		})
-		item.classList.add("category__item--selected");
+	})
+	targetElement.classList.add("category__item--selected");
 		try{
-			if(item.dataset.filterOption === "all"){
+			FILTER_SELECTED.filter = targetElement.dataset.filterOption;
+			if(targetElement.dataset.filterOption === "all"){
 				renderTasks(taskListClass.getTaskList());
 			}else{
-				renderTasks(taskListClass.filterTasks(item.dataset.filterOption));
+				renderTasks(taskListClass.filterTasks(targetElement.dataset.filterOption));
 			}
 		}catch(e){
-			createMessagePopup("No tasks found in this category.", {messageType: MESSAGE__ERROR});
+			//createMessagePopup("No tasks found in this category.", {messageType: MESSAGE__ERROR});
 		}
-	});
 });
 
 function clearInputs(){
@@ -486,4 +475,8 @@ export function recreateLucideIcons() {
 			Percent
 		}
 	});
+}
+
+if(FILTER_SELECTED.filter === "all"){
+	renderTasks(taskListClass.getTaskList());
 }

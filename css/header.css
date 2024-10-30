@@ -1,8 +1,5 @@
 header {
 	width: 100%;
-	padding: 0 var(--padding-content);
-}
-header *{
 	user-select: none;
 }
 .header__top {
@@ -38,7 +35,6 @@ header *{
 	flex-direction: column;
 	color: var(--c-text);
 	background-color: var(--bg-color);
-	border-radius: var(--bdr-rd);
 }
 .progress__container:popover-open{
 	margin-top: var(--header-height);
@@ -65,7 +61,7 @@ header *{
 .progress__container svg #progress{
 	stroke: var(--c-primary);
 	stroke-linecap: round;
-	transition: stroke-dashoffset calc(var(--anim-time) * 2) var(--anim-time);
+	transition: stroke-dashoffset 300ms 200ms;
 }
 .progress__label{
 	position: absolute;
@@ -85,13 +81,12 @@ header *{
 	justify-content: flex-end;
 	position: relative;
 }
-.search__toggle , .progress__toggle{
+.search__toggle , .progress__toggle, .search__go{
 	width: var(--search-buttons-size);
 	height: var(--search-buttons-size);
 	color: currentColor;
 	opacity: 1;
-	transition: opacity var(--anim-time);
-	transition-delay: var(--anim-time);
+	transition: opacity var(--anim-time) var(--anim-time);
 }
 .search__wrapper {
 	width: 0;
@@ -133,13 +128,7 @@ header *{
 	font-size: var(--font-normal);
 	color: var(--c-text);
 }
-.search__go {
-	display: grid;
-	place-items: center;
-	width: var(--search-buttons-size);
-	height: var(--search-buttons-size);
-	color: currentColor;
-}
+
 .search__container button:hover{
 	background-color: var(--c-hover);
 }
@@ -149,29 +138,25 @@ category filter styles
 */
 .category__container{
 	--height: 4.4rem;
-	width: fit-content;
+	width: 50%;
+	height: var(--height);
 	max-height: var(--height);
 	transition: max-height var(--anim-time);
 	overflow: hidden;
-	position: relative;
 }
 .category__toggle{
-	background-color: var(--bg-color);
 	height: var(--height);
 	display: flex;
 	align-items: center;
 	gap: 0.4rem;
-	font-size: var(--font-normal);
-	position: absolute;
-	inset: 0;
-	z-index: 10;
 	cursor: pointer;
 	border-radius: var(--bdr-rd);
 }
 .category__toggle:hover{
-	filter: contrast(90%);
+	background-color: var(--c-hover);
 }
 .category__container.category--expanded{
+	height: auto;
 	max-height: 200px;
 }
 .category--expanded .icon{
@@ -179,29 +164,24 @@ category filter styles
 	transition: transform var(--anim-time);
 }
 .category__list {
-	margin-top: calc(var(--height) + 0.8rem);
-	display: flex;
+	margin-top: 0.8rem;
 	flex-flow: row wrap;
 	gap: 0.8rem;
-	visibility: hidden;
-	max-height: 0;
-	transition: max-height var(--anim-time);
+	display: none;
 }
 .category--expanded .category__list{
-	visibility: visible;
-	max-height: 200px;
+	display: flex;
 }
 .category__item {
 	width: fit-content;
 	padding: 0.8rem;
-	display: flex;
 	gap: 0.4rem;
 	justify-content: flex-start;
-	align-items: center;
 	border: 1px solid var(--c-details);
-	background-color: transparent;
-	border-radius: var(--bdr-rd);
 	color: var(--c-text);
+}
+.category__item *{
+	pointer-events: none;
 }
 .category__item div {
 	width: 1.2rem;
@@ -210,7 +190,6 @@ category filter styles
 }
 .category__item span {
 	line-height: 1;
-	font-size: var(--font-normal);
 }
 .category__item--selected {
 	background-color: var(--c-hover);
