@@ -1,8 +1,14 @@
 const isTotalZero = (total)=>{
 	return total === 0;
 }
+
 /*expected: getTaskCompletionStats method of taskListClass*/
 export function handleProgress({complete, total}){
+/* If the popover is already open at this point, we should not recalculate
+ the progress */
+	if(document.getElementById("progress-container").matches(":popover-open")){
+		return;
+	}
 	const progress = document.getElementById("progress");
 	const progressText = document.getElementById("progress-text");
 	const radius = progress.r.baseVal.value;

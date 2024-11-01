@@ -1,6 +1,6 @@
 @keyframes dialogAnim{
-	from{ transform: scale(0.8); opacity: 0;}
-	to{transform: scale(1); opacity: 1;}
+	from{ opacity: 0;}
+	to{ opacity: 1;}
 }
 .dialog{
 	border: none;
@@ -12,6 +12,7 @@
 }
 
 .dialog::backdrop{
+	animation: dialogAnim var(--anim-time) forwards;
 	background-color: #00000095;
 }
 .dialog__container{
@@ -184,6 +185,10 @@
 		height: 100%;
 		z-index: 10;
 		overflow: hidden;
+	}
+	.dialog::backdrop{
+		animation: none;
+		background-color: transparent;
 	}
 	.dialog:modal{
 		max-width: 100%;
