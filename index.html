@@ -17,83 +17,112 @@
 		<title>Aspire: Reach higher, achieve more</title>
 	</head>
 	<body>
-		<header>
+		<header aria-label="Header with aspire logo, completion progress and search">
 			<div class="header__top">
 				<div class="header__logo">
-					<img id="logo" src="/aspire_icon_purple.webp" alt="The icon of Aspire - Do your best" />
+					<img id="logo" src="/aspire_icon_purple.webp" alt="The logo of Aspire" />
 					<h1>Aspire</h1>
 				</div>
-				<div class="search__container">
-					<button id="btn-toggle-progress" popovertarget="progress-container" class="progress__toggle"><i data-lucide="percent"></i></button>
-					<button class="search__toggle" id="btn-toggle-search"><i data-lucide="search"></i></button>
-					<div class="search__wrapper" id="search-wrapper">
-						<input class="search__input" type="text" id="search-input" name="search" placeholder="Do something cool!" />
-						<button class="search__go" id="btn-search"><i data-lucide="x"></i></button>
-					</div>
+				<div aria-live="assertive" class="search__container">
+					<button
+						id="btn-toggle-progress"
+						popovertarget="progress-container"
+						class="progress__toggle"
+						aria-haspopup="dialog"
+						aria-controls="progress-container"
+						aria-expanded="false"
+						aria-label="Open completion progress">
+						<i data-lucide="percent"></i>
+					</button>
+					<button
+						class="search__toggle"
+						id="btn-toggle-search"
+						aria-label="Open search"
+						aria-expanded="false"
+						aria-controls="search-wrapper"
+						aria-haspopup="dialog">
+						<i data-lucide="search"></i>
+					</button>
+					<section class="search__wrapper" id="search-wrapper" aria-role="dialog" aria-label="Search section">
+						<input
+							aria-role="searchbox"
+							class="search__input"
+							type="text"
+							id="search-input"
+							name="search"
+							placeholder="Search for the task" />
+						<button aria-label="Close and clear search" class="search__go" id="btn-search"><i data-lucide="x"></i></button>
+					</section>
 				</div>
 			</div>
 		</header>
-		<section class="category__container" id="category-container">
-				<div class="category__toggle" id="category-toggle"><i class="icon" data-lucide="chevron-right"></i> <span> Filter</span></div>
-				
-				<!-- filters -->
-				<section class="category__list" id="categories">
-					<button data-filter-option="all" class="category__item category__item--selected">
-						<div class="c__all"></div>
-						<span>All</span>
-					</button>
-					<button data-filter-option="normal" class="category__item">
-						<div class="c__normal"></div>
-						<span>Normal</span>
-					</button>
-					<button data-filter-option="job" class="category__item">
-						<div class="c__job"></div>
-						<span>Job</span>
-					</button>
-					<button data-filter-option="learn" class="category__item">
-						<div class="c__learn"></div>
-						<span>Learn</span>
-					</button>
-					<button data-filter-option="personal" class="category__item">
-						<div class="c__personal"></div>
-						<span>Personal</span>
-					</button>
-					<button data-filter-option="home" class="category__item">
-						<div class="c__home"></div>
-						<span>Home</span>
-					</button>
-					<button data-filter-option="projects" class="category__item">
-						<div class="c__projects"></div>
-						<span>Projects</span>
-					</button>
-					<button data-filter-option="urgent" class="category__item">
-						<div class="c__urgent"></div>
-						<span>Urgent</span>
-					</button>
-					<button data-filter-option="leisure" class="category__item">
-						<div class="c__leisure"></div>
-						<span>Leisure</span>
-					</button>
-				</section>
+		<section class="category__container" id="category-container" aria-label="Filter section">
+			<button
+				class="category__toggle"
+				id="category-toggle"
+				aria-label="Show/Hide the filter options"
+				aria-controls="categories"
+				aria-expanded="false">
+				<i class="icon" data-lucide="chevron-right"></i> <span> Filter</span>
+			</button>
+			<!-- filters -->
+			<section aria-live="assertive" aria-hidden="true" aria-label="Filter by categories" class="category__list" id="categories">
+				<button aria-checked="true" aria-label="List only All" data-filter-option="all" class="category__item category__item--selected">
+					<div class="c__all"></div>
+					<span>All</span>
+				</button>
+				<button aria-label="List only Normal" data-filter-option="normal" class="category__item">
+					<div class="c__normal"></div>
+					<span>Normal</span>
+				</button>
+				<button aria-label="List only Job" data-filter-option="job" class="category__item">
+					<div class="c__job"></div>
+					<span>Job</span>
+				</button>
+				<button aria-label="List only Learn" data-filter-option="learn" class="category__item">
+					<div class="c__learn"></div>
+					<span>Learn</span>
+				</button>
+				<button aria-label="List only Personal" data-filter-option="personal" class="category__item">
+					<div class="c__personal"></div>
+					<span>Personal</span>
+				</button>
+				<button aria-label="List only Home" data-filter-option="home" class="category__item">
+					<div class="c__home"></div>
+					<span>Home</span>
+				</button>
+				<button aria-label="List only Projects" data-filter-option="projects" class="category__item">
+					<div class="c__projects"></div>
+					<span>Projects</span>
+				</button>
+				<button aria-label="List only Urgent" data-filter-option="urgent" class="category__item">
+					<div class="c__urgent"></div>
+					<span>Urgent</span>
+				</button>
+				<button aria-label="List only Leisure" data-filter-option="leisure" class="category__item">
+					<div class="c__leisure"></div>
+					<span>Leisure</span>
+				</button>
+			</section>
 		</section>
 		<main class="container">
-			<section class="container__cards">
+			<section class="container__cards" aria-label="Incompleted tasks">
 				<div class="card__top">
 					<h2 class="cards__title">Incomplete</h2>
-					<button class="button__default" id="btn-add-new">
+					<button aria-label="Create new task" class="button__default" id="btn-add-new">
 						<i class="button__icons" data-lucide="plus"></i><span>Create new task</span>
 					</button>
 				</div>
-				<ul class="task__list" id="inconplete-list"></ul>
+				<ul class="task__list" id="inconplete-list" aria-label="List of incompleted tasks"></ul>
 			</section>
-			<section class="container__cards">
+			<section class="container__cards" aria-label="Completed tasks">
 				<div class="card__top">
 					<h2 class="cards__title">Complete</h2>
-					<button class="button__default button__clear" id="btn-clear-complete">
+					<button aria-label="Clear all completed tasks" class="button__default button__clear" id="btn-clear-complete">
 						<i class="button__icons" data-lucide="trash-2"></i><span>Clear all</span>
 					</button>
 				</div>
-				<ul class="task__list" id="complete-list"></ul>
+				<ul class="task__list" id="complete-list" aria-label="List of completed tasks"></ul>
 			</section>
 		</main>
 		<footer>
@@ -103,31 +132,32 @@
 			</div>
 		</footer>
 		<!-- dialog to add and edit -->
-		<dialog class="dialog" id="newtask-dialog">
+		<dialog class="dialog" id="newtask-dialog" aria-label="Dialog to create new task">
 			<form data-form-mode="new" id="form" class="dialog__container">
 				<div class="dialog__top">
 					<h3 class="cards__title dialog__title" id="dialog-title">New task</h3>
 				</div>
 				<div class="dialog__input__section">
 					<label for="input-task">Task</label>
-					<span class="dialog__input__title">Task</span>
-					<input
+					<span aria-hidden="true" class="dialog__input__title">Task</span>
+					<textarea
 						class="input__task"
 						type="text"
 						id="input-task"
 						name="input-task"
 						minlength="1"
-						maxlength="1000"
-						placeholder="Learn some thing new..." />
+						maxlength="500"
+						rows="3"
+						placeholder="Learn some thing new..."></textarea>
 				</div>
 				<div class="dialog__input__section">
 					<label for="date-task">Date</label>
-					<span class="dialog__input__title">Date</span>
+					<span aria-hidden="true" class="dialog__input__title">Date</span>
 					<input class="date__task" type="date" name="date-task" id="date-task" />
-					<small class="date__disclaimer">If no date is provided, the current date will be used.</small>
+					<small class="date__disclaimer" aria-label="Empty date disclaimer">If no date is provided, the current date will be used.</small>
 				</div>
 				<span class="dialog__input__title">Category</span>
-				<div class="dialog__radio__section">
+				<div class="dialog__radio__section" aria-label="Categories of task">
 					<div class="container__radios">
 						<label for="rd0"><span>Normal</span></label
 						><input type="radio" class="dialog__radios normal" id="rd0" name="rd-color" value="normal" checked />
@@ -174,37 +204,52 @@
 				<p id="popup-text"></p>
 			</div>
 		</div>
-		
-		<div popover class="progress__container" id="progress-container">
-			<span class="cards__title">Progress</span>
+		<!-- progress popover -->
+		<div aria-role="dialog" aria-labelledby="progress-title" aria-hidden="true" popover class="progress__container" id="progress-container">
+			<span id="progress-title" class="cards__title">Progress</span>
 			<div class="progress__container__inner">
 				<div class="progress__wrapper">
 					<svg width="200" height="200" viewBox="0 0 200 200">
-						<circle cx="100" cy="100" r="70" stroke="transparent" fill="transparent"/>
-						<circle transform="rotate(-90 100 100)" id="progress" cx="100" cy="100" r="70" fill="transparent"/>
+						<defs>
+							<linearGradient gradientTransform="rotate(90)" id="bar-gradient">
+								<stop offset="0%" stop-color="var(--c-primary)" />
+								<stop offset="100%" stop-color="var(--c-accent)" />
+							</linearGradient>
+						</defs>
+						<circle cx="100" cy="100" r="70" stroke="var(--c-details)" fill="transparent" />
+						<circle
+							transform="rotate(-90 100 100)"
+							id="progress"
+							cx="100"
+							cy="100"
+							r="70"
+							stroke="url('#bar-gradient')"
+							fill="transparent" />
 					</svg>
 					<span class="progress__label" id="progress-text"></span>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- list items template -->
 		<template id="template-items">
 			<li class="list__item" data-id="">
 				<div class="item__content">
 					<div class="item__data">
-						<p class="data__title"></p>
-						<p class="data__date"></p>
-						<div class="data__color"></div>
+						<p aria-label="Task title" class="data__title"></p>
+						<p aria-label="Task date" class="data__date"></p>
+						<div aria-label="Category of the task" class="data__color"></div>
 					</div>
 					<div class="item__action">
-						<button class="action__button"><i class="menu__item__icon icon" data-lucide="circle-ellipsis"></i></button>
+						<button aria-expanded="false" aria-controls="action-menu" aria-haspopup="menu" aria-label="Open item action menu" class="action__button">
+							<i class="menu__item__icon icon" data-lucide="circle-ellipsis"></i>
+						</button>
 					</div>
 				</div>
-				<div class="action__menu">
-					<ul class="menu__list">
-						<li data-function="edit"><i data-lucide="pencil" class="menu__item__icon icon"></i> Edit</li>
-						<li data-function="delete"><i data-lucide="trash-2" class="menu__item__icon icon"></i> Delete</li>
+				<div aria-label="Item action menu" class="action__menu" id="action-menu" aria-role="menu">
+					<ul aria-label="Item action menu list" class="menu__list">
+						<li aria-label="Edit task" data-function="edit"><i data-lucide="pencil" class="menu__item__icon icon"></i> Edit</li>
+						<li aria-label="Delete task" data-function="delete"><i data-lucide="trash-2" class="menu__item__icon icon"></i> Delete</li>
 					</ul>
 				</div>
 			</li>

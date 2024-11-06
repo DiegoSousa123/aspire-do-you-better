@@ -1,12 +1,16 @@
-const isTotalZero = (total)=>{
+const isTotalZero = (total) => {
 	return total === 0;
-}
+};
 
 /*expected: getTaskCompletionStats method of taskListClass*/
 export function handleProgress({complete, total}){
-/* If the popover is already open at this point, we should not recalculate
- the progress */
-	if(document.getElementById("progress-container").matches(":popover-open")){
+ //If the popover is already open at this point, we should not recalculate
+ //the progress
+ const progressContainer = document.getElementById("progress-container");
+ const isPopoverHidden = progressContainer.getAttribute("aria-hidden") === 'true';
+	if(progressContainer.matches(":popover-open")){
+		progressContainer.setAttribute("aria-hidden", `${!isPopoverHidden}`);
+		document.getElementById("btn-toggle-search").setAttribute("aria-expanded", `${isPopoverHidden}`);
 		return;
 	}
 	const progress = document.getElementById("progress");
@@ -23,4 +27,7 @@ export function handleProgress({complete, total}){
 	const offsetPercentage = circunferenceCircle - (percentage	* circunferenceCircle);
 	progressText.textContent = `${Number(percentage * 100).toFixed()}%`;
 	progress.style.strokeDashoffset = `${offsetPercentage}`;
+	
+	document.getElementById("btn-toggle-search").setAttribute("aria-expanded", `${isPopoverHidden}`);
+	progressContainer.setAttribute("aria-hidden", `${!isPopoverHidden}`);
 }

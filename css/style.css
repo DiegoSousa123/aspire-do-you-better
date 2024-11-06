@@ -27,7 +27,9 @@ button {
 *:hover {
 	transition: background var(--anim-time);
 }
-
+*:focus-visible{
+	outline: 2px solid var(--c-accent);
+}
 body {
 	display: flex;
 	flex-direction: column;
@@ -197,11 +199,13 @@ body {
 	min-width: max-content;
 	background-color: var(--bg-color);
 	box-shadow: 0 0.1rem 1.2rem -0.4rem rgba(0, 0, 0, 0.2);
+	visibility: hidden;
 	opacity: 0;
 	pointer-events: none;
 	user-select: none;
 }
 .action__menu.action__menu--show {
+	visibility: visible;
 	transition: opacity var(--anim-time);
 	opacity: 1;
 	pointer-events: auto;

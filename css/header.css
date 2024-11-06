@@ -55,14 +55,10 @@ header {
 
 .progress__container svg circle{
 	stroke-width: 0.8rem;
-	stroke: var(--c-details);
-}
-
-.progress__container svg #progress{
-	stroke: var(--c-primary);
 	stroke-linecap: round;
 	transition: stroke-dashoffset 300ms 200ms;
 }
+
 .progress__label{
 	position: absolute;
 	color: var(--c-primary);
@@ -99,11 +95,12 @@ header {
 	padding: 0 0.4rem;
 	opacity: 0;
 	display: flex;
+	visibility: hidden;
 	align-items: center;
 	justify-content: flex-end;
 	pointer-events: none;
 }
-.search__wrapper:has(*:hover) {
+.search__wrapper--visible:has(:focus) {
 	background-color: var(--c-hover);
 }
 .search__wrapper--visible {
@@ -113,6 +110,7 @@ header {
 	width: var(--search-width);
 	opacity: 1;
 	pointer-events: auto;
+	visibility: visible;
 }
 .search__container:has(.search__wrapper.search__wrapper--visible) > button{
 	visibility: hidden;
@@ -147,9 +145,12 @@ category filter styles
 .category__toggle{
 	height: var(--height);
 	display: flex;
+	width: inherit;
+	justify-content: flex-start;
 	align-items: center;
 	gap: 0.4rem;
 	cursor: pointer;
+	color: var(--c-text);
 	border-radius: var(--bdr-rd);
 }
 .category__toggle:hover{
