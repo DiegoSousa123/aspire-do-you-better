@@ -13,11 +13,13 @@
 }
 [popover]:popover-open{
 	opacity: 1;
+	pointer-events: auto;
 	transform: translateY(0);
 }
 [popover]{
 	min-width: 360px;
 	opacity: 0;
+	pointer-events: none;
 	transform: translateY(-100%);
 	transition: opacity var(--anim-time), transform var(--anim-time), overlay var(--anim-time) allow-discrete, display var(--anim-time) allow-discrete;
 	margin: 1.2rem auto;

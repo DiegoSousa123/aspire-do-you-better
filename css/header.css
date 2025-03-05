@@ -1,8 +1,5 @@
 header {
 	width: 100%;
-	padding: 0 var(--padding-content);
-}
-header *{
 	user-select: none;
 }
 .header__top {
@@ -27,6 +24,48 @@ header *{
 	font-size: var(--font-xxlarge);
 	line-height: 1.1;
 }
+
+.progress__container{
+	min-width: 30rem;
+	max-height: 30rem;
+	padding: 1.2rem 0.8rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: var(--c-text);
+	background-color: var(--bg-color);
+}
+.progress__container:popover-open{
+	margin-top: var(--header-height);
+}
+.progress__container__inner{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.8rem;
+}
+.progress__wrapper{
+	display: grid;
+	place-items: center;
+	position: relative;
+	width: 100%;
+}
+
+.progress__container svg circle{
+	stroke-width: 0.8rem;
+	stroke-linecap: round;
+	transition: stroke-dashoffset 300ms 200ms;
+}
+
+.progress__label{
+	position: absolute;
+	color: var(--c-primary);
+	font-size: var(--font-xxlarge);
+	font-weight: 800;
+}
+
 /*search related styles*/
 .search__container {
 	--search-buttons-size: 3.6rem;
@@ -34,20 +73,19 @@ header *{
 	min-height: calc(var(--font-normal) * 3);
 	display: flex;
 	align-items: center;
+	gap: 0.8rem;
 	justify-content: flex-end;
 	position: relative;
-	overflow: hidden;
 }
-.search__toggle {
+.search__toggle , .progress__toggle, .search__go{
 	width: var(--search-buttons-size);
 	height: var(--search-buttons-size);
 	color: currentColor;
 	opacity: 1;
-	transition: opacity var(--anim-time);
-	transition-delay: var(--anim-time);
+	transition: opacity var(--anim-time) var(--anim-time);
 }
 .search__wrapper {
-	width: 40rem;
+	width: 0;
 	background-color: var(--c-input-bg);
 	border: 1px solid var(--c-details);
 	border-radius: var(--bdr-rd);
@@ -55,29 +93,26 @@ header *{
 	inset: 0;
 	margin-left: auto;
 	padding: 0 0.4rem;
-	transform: scale(0.7);
-	transform-origin: right;
 	opacity: 0;
 	display: flex;
+	visibility: hidden;
 	align-items: center;
 	justify-content: flex-end;
-	transition:
-		opacity var(--anim-time),
-		transform var(--anim-time);
 	pointer-events: none;
 }
-.search__wrapper:has(*:hover) {
+.search__wrapper--visible:has(:focus) {
 	background-color: var(--c-hover);
 }
 .search__wrapper--visible {
+	--search-width: 40rem;
 	transition:
-		opacity var(--anim-time) 150ms,
-		transform var(--anim-time);
-	transform: scale(1);
+		opacity var(--anim-time);
+	width: var(--search-width);
 	opacity: 1;
 	pointer-events: auto;
+	visibility: visible;
 }
-.search__container:has(.search__wrapper.search__wrapper--visible) > .search__toggle {
+.search__container:has(.search__wrapper.search__wrapper--visible) > button{
 	visibility: hidden;
 	pointer-events: none;
 	opacity: 0;
@@ -91,15 +126,8 @@ header *{
 	font-size: var(--font-normal);
 	color: var(--c-text);
 }
-.search__go {
-	display: grid;
-	place-items: center;
-	width: var(--search-buttons-size);
-	height: var(--search-buttons-size);
-	color: currentColor;
-}
-.search__toggle:hover,
-.search__go:hover {
+
+.search__container button:hover{
 	background-color: var(--c-hover);
 }
 /**********/
@@ -108,29 +136,28 @@ category filter styles
 */
 .category__container{
 	--height: 4.4rem;
-	width: fit-content;
+	width: 50%;
+	height: var(--height);
 	max-height: var(--height);
 	transition: max-height var(--anim-time);
 	overflow: hidden;
-	position: relative;
 }
 .category__toggle{
-	background-color: var(--bg-color);
 	height: var(--height);
 	display: flex;
+	width: inherit;
+	justify-content: flex-start;
 	align-items: center;
 	gap: 0.4rem;
-	font-size: var(--font-normal);
-	position: absolute;
-	inset: 0;
-	z-index: 10;
 	cursor: pointer;
+	color: var(--c-text);
 	border-radius: var(--bdr-rd);
 }
 .category__toggle:hover{
-	filter: contrast(90%);
+	background-color: var(--c-hover);
 }
 .category__container.category--expanded{
+	height: auto;
 	max-height: 200px;
 }
 .category--expanded .icon{
@@ -138,31 +165,24 @@ category filter styles
 	transition: transform var(--anim-time);
 }
 .category__list {
-	margin-top: calc(var(--height) + 0.8rem);
-	display: flex;
+	margin-top: 0.8rem;
 	flex-flow: row wrap;
 	gap: 0.8rem;
-	opacity: 0;
-	transform: translateY(-100%);
-	transition: opacity var(--anim-time) 150ms, 
-	transform var(--anim-time);
-	will-change: transform, opacity;
+	display: none;
 }
 .category--expanded .category__list{
-	opacity: 1;
-	transform: translateY(0);
+	display: flex;
 }
 .category__item {
 	width: fit-content;
 	padding: 0.8rem;
-	display: flex;
 	gap: 0.4rem;
 	justify-content: flex-start;
-	align-items: center;
 	border: 1px solid var(--c-details);
-	background-color: transparent;
-	border-radius: var(--bdr-rd);
 	color: var(--c-text);
+}
+.category__item *{
+	pointer-events: none;
 }
 .category__item div {
 	width: 1.2rem;
@@ -171,7 +191,6 @@ category filter styles
 }
 .category__item span {
 	line-height: 1;
-	font-size: var(--font-normal);
 }
 .category__item--selected {
 	background-color: var(--c-hover);
@@ -207,8 +226,11 @@ category filter styles
 /******/
 
 @media (width < 600px){
-	.search__container, .search__wrapper, .search__wrapper > input{ 
+	.search__container, .search__wrapper > input{ 
 		width: 100%;
+	}
+	.search__wrapper--visible{
+		--search-width: 100%;
 	}
 	.category__container{
 		width: 100%;
@@ -220,5 +242,8 @@ category filter styles
 		opacity: 0;
 		width: 0;
 		height: 0;
+	}
+	.progress__container{
+		width: 100%;
 	}
 }

@@ -83,9 +83,10 @@ function itemAction(element) {
 	const pos = element.getBoundingClientRect();
 	const menu = element.querySelector(".action__menu");
 	const menuItem = menu.querySelector(".menu__list");
+	const isMenuOpen = menu.classList.contains("action__menu--show");
 	menu.style.top = `${pos.offsetHeight}px`;
 	menu.style.right = `0`;
-	if (!menu.classList.contains("action__menu--show")) {
+	if (!isMenuOpen) {
 		closeOtherPopups();
 	}
 	menu.classList.toggle("action__menu--show");
@@ -93,6 +94,7 @@ function itemAction(element) {
 	document.removeEventListener("click", closeOtherPopups);
 	menuItem.addEventListener("click", handleItemAction);
 	document.addEventListener("click", closeOtherPopups);
+	
 }
 //Funcao para fechar outros menus
 //ao clicar no botao
