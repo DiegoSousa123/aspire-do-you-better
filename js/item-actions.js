@@ -26,13 +26,17 @@ function handleDragStart(e){
 }
 function handleDragEnd(e){
 	e.target.classList.remove("item__dragging");
-	e.currentTarget.classList.remove("list__drag__highlight");
+	listIncomplete.classList.remove("list__drag__highlight");
+	listComplete.classList.remove("list__drag__highlight");
 }
 function handleDragEnter(e){
 	e.currentTarget.classList.add("list__drag__highlight");
 }
 function handleDragLeave(e){
-	e.currentTarget.classList.remove("list__drag__highlight");
+	// Only remove highlight if leaving the list container itself, not when entering child elements
+	if (e.target === e.currentTarget) {
+		e.currentTarget.classList.remove("list__drag__highlight");
+	}
 }
 function handleDragOver(e){
 	e.preventDefault();
@@ -40,16 +44,29 @@ function handleDragOver(e){
 }
 
 function handleDropEvent(e){
+	e.preventDefault();
 	const targetItemId = e.dataTransfer.getData("text/plain");
 	const taskIsDone = taskListClass.getTaskItem(targetItemId).done;
 	if(e.currentTarget === listIncomplete && !taskIsDone){
+		e.currentTarget.classList.remove("list__drag__highlight");
 		return;
 	}else if(e.currentTarget === listComplete && taskIsDone){
+		e.currentTarget.classList.remove("list__drag__highlight");
 		return;
 	}
 	const targetItem = document.querySelector(`[data-id="${targetItemId}"]`);
+	const itemContent = targetItem.querySelector(".item__content");
+	
+	// Remove old animation class and add it again to trigger animation
+	itemContent.classList.remove("list__item--show");
+	
 	e.currentTarget.prepend(targetItem);
 	e.currentTarget.classList.remove("list__drag__highlight");
+	
+	// Trigger reflow to restart animation
+	void itemContent.offsetWidth;
+	itemContent.classList.add("list__item--show");
+	
 	toggleStateTask(targetItem, targetItemId);
 }
 
