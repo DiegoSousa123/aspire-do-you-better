@@ -55,7 +55,10 @@ function handleDropEvent(e){
 		return;
 	}
 	const targetItem = document.querySelector(`[data-id="${targetItemId}"]`);
+	if (!targetItem) return;
+	
 	const itemContent = targetItem.querySelector(".item__content");
+	if (!itemContent) return;
 	
 	// Remove old animation class and add it again to trigger animation
 	itemContent.classList.remove("list__item--show");
