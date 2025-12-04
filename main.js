@@ -68,8 +68,13 @@ class TaskList {
 			total: this.#task_list.length
 		};
 	}
-	validateIfExists(task) {
-		return this.#task_list.some((item) => item.task === task);
+	validateIfExists(task, date, category) {
+		return this.#task_list.some((item) => {
+			//item.task.toLowerCase() === task.toLowerCase()
+			if (item.task.toLowerCase() === task.toLowerCase() && (item.date == date) && (item.category == category)){
+				return true
+			}
+		});
 	}
 	deleteTask(taskId) {
 		const index = this.getTaskIndex(taskId);
@@ -331,7 +336,7 @@ function validateInputs(task) {
 
 //funcao para adicionar nova meta
 function addNew(props) {
-	if (taskListClass.validateIfExists(props.task)) {
+	if (taskListClass.validateIfExists(props.task, props.date, props.category)) {
 		createMessagePopup(`The task "${props.task}" already exists.`);
 		return;
 	}
